@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 
 public class Homepage extends JFrame {
 
@@ -28,7 +29,12 @@ public class Homepage extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				DBDemo app = new DBDemo();
-				app.run();
+				try {
+					app.run();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		button.setBounds(48,34,170,66);

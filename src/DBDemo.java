@@ -1,7 +1,11 @@
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.Properties;
 
 /**
@@ -51,7 +55,7 @@ public class DBDemo {
 	private final int portNumber = 3306;
 
 	/** The name of the database we are testing with (this default is installed with MySQL) */
-	private final String dbName = "library";
+	private final String dbName = "libraryProject";
 	
 	
 	/** The name of the tables we are using */
@@ -99,11 +103,13 @@ public class DBDemo {
 	        if (stmt != null) { stmt.close(); }
 	    }
 	}
+
 	
 	/**
-	 * Connect to MySQL and do some stuff.
+	 * Connect to MySQL and get all users!
+	 * @throws SQLException 
 	 */
-	public void run() {
+	public void run() throws SQLException {
 
 		// Connect to MySQL
 		Connection conn = null;
@@ -116,84 +122,30 @@ public class DBDemo {
 			return;
 		}
 		
-		//delete tables if exists here. they need to be in a certain order because of foreign key constraints.
-		try{
-			//currently the order needs to be loan, then user
-			this.executeUpdate(conn, "DROP TABLE IF EXISTS LOAN");
-			System.out.println("drop table if exists loan executed");
-			
-			this.executeUpdate(conn, "DROP TABLE IF EXISTS USER");
-			System.out.println("drop table if exists user executed");
-
-			
-			}catch (SQLException e){
-				System.out.println("ERROR: Could not drop tables if they exist for some reason.");
-				e.printStackTrace();
-			}
+		String testQuery = "SELECT * FROM user";
+		Statement ts = conn.createStatement();
+		ResultSet rs = ts.executeQuery(testQuery);
 		
-		// Create user tables
-		try {			
-		    String createString =
-			        "CREATE TABLE " + this.userTableName + " ( " +
-			        "UID INTEGER NOT NULL, " +
-			        "NAME VARCHAR(30), " +
-			        "ISEMPLOYEE TINYINT DEFAULT 0, " +
-			        "BORROWED INT DEFAULT 0, " +
-			        "BIRTHDATE DATE DEFAULT '0000-00-00', " +
-			        "FEES DOUBLE DEFAULT 0.0, " +
-			        "UPDATEDON TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP,"+ 
-			        "CHECK(ISEMPLOYEE<2), "+
-			        "PRIMARY KEY (UID))";
-			this.executeUpdate(conn, createString);
-			System.out.println("Created a " + this.userTableName + " table");
-			//do the increment for user
-			this.executeUpdate(conn, "ALTER TABLE USER AUTO_INCREMENT = 1");
-			System.out.println("USER table now increments starting from 1.");
-		} catch (SQLException e) {
-			System.out.println("ERROR: Could not create the "+ this.userTableName+ " table");
-			e.printStackTrace();
-			return;
+		while(rs.next()){
+			int uid = rs.getInt("uid");
+			String name = rs.getString("name");
+			int isEmployee = rs.getInt("isEmployee");
+			int borrowed = rs.getInt("borrowed");
+			Date birthday = rs.getDate("birthday");
+			Double fees = rs.getDouble("fees");
+			Timestamp updatedOn = rs.getTimestamp("updatedOn");
+			
+			System.out.format("%s,%s,%s,%s,%td,%s,%s%n", uid, name, isEmployee, borrowed, birthday, fees, updatedOn.toString());
 		}
-//		
-//		// Drop the user table KEEP THIS FOR FUTURE REFERENCE BUT THIS IS CURRENTLY NOT NEEDED IF THERE IS THE DROP IF... STATEMENT PER TABLE
-//		try {
-//		    String dropString = "DROP TABLE " + this.userTableName;
-//			this.executeUpdate(conn, dropString);
-//			System.out.println("Dropped the " +this.userTableName+" table");
-//	    } catch (SQLException e) {
-//			System.out.println("ERROR: Could not drop the "+this.userTableName+" table");
-//			e.printStackTrace();
-//			return;
-//		}
+		ts.close();
 		
-		// Create loan tables
-				try {
-				    String createString =
-					        "CREATE TABLE " + this.loanTableName + " ( " +
-					        "LOANID INTEGER AUTO_INCREMENT, " +
-					        "UID INT, " +
-					        "BOOKID INT, " +
-					        "CHECKOUTDATE DATE DEFAULT '0000-00-00', " +
-					        "DUEDATE DATE DEFAULT '0000-00-00', " +
-					        "OVERDUE TINYINT UNSIGNED DEFAULT 0, " +
-					        "CHECK(OVERDUE<2), " +
-					        "PRIMARY KEY (LOANID), " +
-					        "FOREIGN KEY (UID) references USER (UID))";
-				    //TODO make a foreign key for bookid after book is made
-					this.executeUpdate(conn, createString);
-					System.out.println("Created a " + this.loanTableName + " table");
-					
-					this.executeUpdate(conn, "ALTER table LOAN AUTO_INCREMENT = 1001");
-					System.out.println("LOAN table now increments starting at 1001.");
-
-			    } catch (SQLException e) {
-					System.out.println("ERROR: Could not create the "+ this.loanTableName+ " table");
-					e.printStackTrace();
-					return;
-				}
+		
+		
 	}
 	
 	/**
+	 * Make a window.
+	 * connect to the database.
 	 * Connect to the DB and do some stuff
 	 */
 	public static void main(String[] args) {
