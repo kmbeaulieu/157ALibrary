@@ -115,13 +115,24 @@ public class DBDemo {
 			e.printStackTrace();
 			return;
 		}
-
-		// Create user tables
-		try {
-			//drop table if exists so we dont run into problems being able to create it.
+		
+		//delete tables if exists here. they need to be in a certain order because of foreign key constraints.
+		try{
+			//currently the order needs to be loan, then user
+			this.executeUpdate(conn, "DROP TABLE IF EXISTS LOAN");
+			System.out.println("drop table if exists loan executed");
+			
 			this.executeUpdate(conn, "DROP TABLE IF EXISTS USER");
 			System.out.println("drop table if exists user executed");
+
 			
+			}catch (SQLException e){
+				System.out.println("ERROR: Could not drop tables if they exist for some reason.");
+				e.printStackTrace();
+			}
+		
+		// Create user tables
+		try {			
 		    String createString =
 			        "CREATE TABLE " + this.userTableName + " ( " +
 			        "UID INTEGER NOT NULL, " +
@@ -137,7 +148,7 @@ public class DBDemo {
 			System.out.println("Created a " + this.userTableName + " table");
 			//do the increment for user
 			this.executeUpdate(conn, "ALTER TABLE USER AUTO_INCREMENT = 1");
-			System.out.println("altered user table to increment from 1.");
+			System.out.println("USER table now increments starting from 1.");
 		} catch (SQLException e) {
 			System.out.println("ERROR: Could not create the "+ this.userTableName+ " table");
 			e.printStackTrace();
@@ -157,10 +168,6 @@ public class DBDemo {
 		
 		// Create loan tables
 				try {
-					//drop table if exists so we dont run into problems being able to create it.
-					this.executeUpdate(conn, "DROP TABLE IF EXISTS LOAN");
-					System.out.println("drop table if exists loan executed");
-					
 				    String createString =
 					        "CREATE TABLE " + this.loanTableName + " ( " +
 					        "LOANID INTEGER AUTO_INCREMENT, " +
@@ -168,7 +175,7 @@ public class DBDemo {
 					        "BOOKID INT, " +
 					        "CHECKOUTDATE DATE DEFAULT '0000-00-00', " +
 					        "DUEDATE DATE DEFAULT '0000-00-00', " +
-					        "OVERDUE TINYINT DEFAULT 0, " +
+					        "OVERDUE TINYINT UNSIGNED DEFAULT 0, " +
 					        "CHECK(OVERDUE<2), " +
 					        "PRIMARY KEY (LOANID), " +
 					        "FOREIGN KEY (UID) references USER (UID))";
