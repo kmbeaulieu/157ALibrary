@@ -84,5 +84,13 @@ CREATE TABLE ARCHIVE
 ) ;
 ALTER table USER AUTO_INCREMENT = 9001;
 
-LOAD DATA LOCAL INFILE 'c:\\Users\\Fion\\Desktop\\locations.txt' INTO TABLE LOCATION;
-LOAD DATA LOCAL INFILE 'c:\\Users\\Fion\\Desktop\\books.txt' INTO TABLE BOOK;
+-- local files. comment out what you dont need. highlight then ctrl + divide (the / on the num pad)
+-- Krystle table files
+LOAD DATA LOCAL INFILE 'c:\\Users\\Kori\\Documents\\GitHub\\157AProject\\sql files\\user.txt' INTO TABLE USER;
+LOAD DATA LOCAL INFILE 'C:\\Users\\Kori\\Documents\\GitHub\\157ALibrary\\sql files\\location.txt' INTO TABLE LOCATION;
+LOAD DATA LOCAL INFILE 'c:\\Users\\Kori\\Documents\\GitHub\\157AProject\\sql files\\book.txt' INTO TABLE BOOK;
+LOAD DATA LOCAL INFILE 'C:\\Users\\Kori\\Documents\\GitHub\\157ALibrary\\sql files\\employee.txt' INTO TABLE EMPLOYEE;
+-- Fion table files
+-- LOAD DATA LOCAL INFILE 'c:\\Users\\Fion\\Desktop\\locations.txt' INTO TABLE LOCATION;
+-- LOAD DATA LOCAL INFILE 'c:\\Users\\Fion\\Desktop\\books.txt' INTO TABLE BOOK;
+-- Shakti table files

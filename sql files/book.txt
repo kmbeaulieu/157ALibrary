@@ -1,1 +1,10 @@
-2001	Bambi	authorName	100	3001
+	Bambi	Felix Salten	5	3001
+	Faraway Child	Amy Maida Wadsworth	3	3002
+	Lion King	Don Ferguson	11	3003
+	The Silver Sun	Nancy Springer	9	3003
+	Eye of Sierras	Robin Jones Gunn	13	3004
+	The Path's Secrets	Sayyid Haydar Amuli	5	3005
+	Evening in the Ashes	Dorothy Love	20	3006
+	The Sage and the Lace	James Dove	4	3006
+	Database Systems	Jennifer Widom	1	3006
+	Every Perfect Gift	Dorothy Love	5	3007
