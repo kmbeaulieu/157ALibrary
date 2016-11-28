@@ -23,7 +23,8 @@ shelfID INT,
 rowNumber INT,
 bookID INT,
 CHECK(shelfID>0 and shelfID<11 and rowNumber>0 and rowNumber<21),
-PRIMARY KEY(locationID));
+PRIMARY KEY(locationID)
+);
 ALTER table LOCATION AUTO_INCREMENT = 3001;
 
 DROP TABLE IF EXISTS BOOK;
@@ -82,3 +83,6 @@ CREATE TABLE ARCHIVE
  PRIMARY KEY (uID)
 ) ;
 ALTER table USER AUTO_INCREMENT = 9001;
+
+LOAD DATA LOCAL INFILE 'c:\\Users\\Fion\\Desktop\\locations.txt' INTO TABLE LOCATION;
+LOAD DATA LOCAL INFILE 'c:\\Users\\Fion\\Desktop\\books.txt' INTO TABLE BOOK;
