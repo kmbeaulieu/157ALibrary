@@ -51,10 +51,16 @@ public class DBDemo {
 	private final int portNumber = 3306;
 
 	/** The name of the database we are testing with (this default is installed with MySQL) */
-	private final String dbName = "test";
+	private final String dbName = "library";
 	
-	/** The name of the table we are testing with */
-	private final String tableName = "JDBC_TEST";
+	
+	/** The name of the tables we are using */
+	private final String userTableName = "USER";
+	private final String loanTableName = "LOAN";
+	private final String bookTableName = "BOOK";
+	private final String locationTableName = "LOCATION";
+	private final String employeeTableName = "EMPLOYEE";
+	private final String archiveTableName = "ARCHIVE";
 	
 	/**
 	 * Get a new database connection
@@ -71,7 +77,7 @@ public class DBDemo {
 		conn = DriverManager.getConnection("jdbc:mysql://"
 				+ this.serverName + ":" + this.portNumber + "/" + this.dbName,
 				connectionProps);
-
+		
 		return conn;
 	}
 
@@ -110,10 +116,10 @@ public class DBDemo {
 			return;
 		}
 
-		// Create a table
+		// Create user tables
 		try {
 		    String createString =
-			        "CREATE TABLE " + this.tableName + " ( " +
+			        "CREATE TABLE " + this.userTableName + " ( " +
 			        "ID INTEGER NOT NULL, " +
 			        "NAME varchar(40) NOT NULL, " +
 			        "STREET varchar(40) NOT NULL, " +
@@ -122,23 +128,52 @@ public class DBDemo {
 			        "ZIP char(5), " +
 			        "PRIMARY KEY (ID))";
 			this.executeUpdate(conn, createString);
-			System.out.println("Created a table");
+			System.out.println("Created a " + this.userTableName + " table");
 	    } catch (SQLException e) {
-			System.out.println("ERROR: Could not create the table");
+			System.out.println("ERROR: Could not create the "+ this.userTableName+ " table");
 			e.printStackTrace();
 			return;
 		}
 		
-		// Drop the table
+		// Drop the user table
 		try {
-		    String dropString = "DROP TABLE " + this.tableName;
+		    String dropString = "DROP TABLE " + this.userTableName;
 			this.executeUpdate(conn, dropString);
-			System.out.println("Dropped the table");
+			System.out.println("Dropped the " +this.userTableName+" table");
 	    } catch (SQLException e) {
-			System.out.println("ERROR: Could not drop the table");
+			System.out.println("ERROR: Could not drop the "+this.userTableName+" table");
 			e.printStackTrace();
 			return;
 		}
+		
+		// Create loan tables
+				try {
+				    String createString =
+					        "CREATE TABLE " + this.loanTableName + " ( " +
+					        "ID INTEGER NOT NULL, " +
+					        "NAME varchar(40) NOT NULL, " +
+					        "STREET varchar(40) NOT NULL, " +
+					        "CITY varchar(20) NOT NULL, " +
+					        "STATE char(2) NOT NULL, " +
+					        "ZIP char(5), " +
+					        "PRIMARY KEY (ID))";
+					this.executeUpdate(conn, createString);
+					System.out.println("Created a " + this.loanTableName + " table");
+			    } catch (SQLException e) {
+					System.out.println("ERROR: Could not create the "+ this.loanTableName+ " table");
+					e.printStackTrace();
+					return;
+				}
+				// Drop the loan table
+				try {
+				    String dropString = "DROP TABLE " + this.loanTableName;
+					this.executeUpdate(conn, dropString);
+					System.out.println("Dropped the " +this.loanTableName+" table");
+			    } catch (SQLException e) {
+					System.out.println("ERROR: Could not drop the "+this.loanTableName+" table");
+					e.printStackTrace();
+					return;
+				}
 	}
 	
 	/**
