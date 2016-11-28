@@ -82,15 +82,16 @@ CREATE TABLE ARCHIVE
  CHECK(isEmployee<2),
  PRIMARY KEY (uID)
 ) ;
-ALTER table USER AUTO_INCREMENT = 9001;
+ALTER table ARCHIVE AUTO_INCREMENT = 9001;
 
 -- local files. comment out what you dont need. highlight then ctrl + divide (the / on the num pad)
 -- Krystle table files
-LOAD DATA LOCAL INFILE 'c:\\Users\\Kori\\Documents\\GitHub\\157AProject\\sql files\\user.txt' INTO TABLE USER;
-LOAD DATA LOCAL INFILE 'C:\\Users\\Kori\\Documents\\GitHub\\157ALibrary\\sql files\\location.txt' INTO TABLE LOCATION;
-LOAD DATA LOCAL INFILE 'c:\\Users\\Kori\\Documents\\GitHub\\157AProject\\sql files\\book.txt' INTO TABLE BOOK;
-LOAD DATA LOCAL INFILE 'C:\\Users\\Kori\\Documents\\GitHub\\157ALibrary\\sql files\\employee.txt' INTO TABLE EMPLOYEE;
+--LOAD DATA LOCAL INFILE 'C:\\Users\\Kori\\Documents\\GitHub\\157ALibrary\\sql files\\user.txt' INTO TABLE USER;
+--LOAD DATA LOCAL INFILE 'C:\\Users\\Kori\\Documents\\GitHub\\157ALibrary\\sql files\\location.txt' INTO TABLE LOCATION;
+--LOAD DATA LOCAL INFILE 'c:\\Users\\Kori\\Documents\\GitHub\\157AProject\\sql files\\book.txt' INTO TABLE BOOK;
+--LOAD DATA LOCAL INFILE 'C:\\Users\\Kori\\Documents\\GitHub\\157ALibrary\\sql files\\employee.txt' INTO TABLE EMPLOYEE;
 -- Fion table files
 -- LOAD DATA LOCAL INFILE 'c:\\Users\\Fion\\Desktop\\locations.txt' INTO TABLE LOCATION;
 -- LOAD DATA LOCAL INFILE 'c:\\Users\\Fion\\Desktop\\books.txt' INTO TABLE BOOK;
 -- Shakti table files
+-- LOAD DATA LOCAL INFILE '/Users/Shakti1994/Documents/Eclipse/157ALibrary/sql files/archive.txt' INTO TABLE ARCHIVE;
