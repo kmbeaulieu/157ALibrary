@@ -40,6 +40,7 @@ CREATE TABLE BOOK
 );
 ALTER table BOOK AUTO_INCREMENT = 2001;
 
+
 DROP TABLE IF EXISTS LOAN;
 CREATE TABLE LOAN
 (loanID INT AUTO_INCREMENT,
@@ -75,7 +76,7 @@ CREATE TABLE ARCHIVE
  name VARCHAR(30),
  isEmployee TINYINT DEFAULT 0,
  borrowed INT DEFAULT 0,
- birthdate DATE DEFAULT '0000-00-00',
+ birthday DATE DEFAULT '0000-00-00',
  fees DOUBLE DEFAULT 0.0,
  updatedOn timestamp not null on update current_timestamp,
  archivedOn timestamp not null,
@@ -84,14 +85,71 @@ CREATE TABLE ARCHIVE
 ) ;
 ALTER table ARCHIVE AUTO_INCREMENT = 9001;
 
--- local files. comment out what you dont need. highlight then ctrl + divide (the / on the num pad)
--- Krystle table files
---LOAD DATA LOCAL INFILE 'C:\\Users\\Kori\\Documents\\GitHub\\157ALibrary\\sql files\\user.txt' INTO TABLE USER;
---LOAD DATA LOCAL INFILE 'C:\\Users\\Kori\\Documents\\GitHub\\157ALibrary\\sql files\\location.txt' INTO TABLE LOCATION;
---LOAD DATA LOCAL INFILE 'c:\\Users\\Kori\\Documents\\GitHub\\157AProject\\sql files\\book.txt' INTO TABLE BOOK;
---LOAD DATA LOCAL INFILE 'C:\\Users\\Kori\\Documents\\GitHub\\157ALibrary\\sql files\\employee.txt' INTO TABLE EMPLOYEE;
--- Fion table files
--- LOAD DATA LOCAL INFILE 'c:\\Users\\Fion\\Desktop\\locations.txt' INTO TABLE LOCATION;
--- LOAD DATA LOCAL INFILE 'c:\\Users\\Fion\\Desktop\\books.txt' INTO TABLE BOOK;
--- Shakti table files
--- LOAD DATA LOCAL INFILE '/Users/Shakti1994/Documents/Eclipse/157ALibrary/sql files/archive.txt' INTO TABLE ARCHIVE;
+--
+-- Inserting dummy data into User
+--
+
+
+--
+-- Inserting dummy data into Location
+--
+INSERT INTO LOCATION (shelfID, rowNumber, bookID)
+VALUES (1, 5, 2001);
+INSERT INTO LOCATION (shelfID, rowNumber, bookID)
+VALUES (1, 2, 2002);
+INSERT INTO LOCATION (shelfID, rowNumber, bookID)
+VALUES (2, 2, 2003);
+INSERT INTO LOCATION (shelfID, rowNumber, bookID)
+VALUES (2, 9, 2004);
+INSERT INTO LOCATION (shelfID, rowNumber, bookID)
+VALUES (3, 1, 2005);
+INSERT INTO LOCATION (shelfID, rowNumber, bookID)
+VALUES (3, 3, 2006);
+INSERT INTO LOCATION (shelfID, rowNumber, bookID)
+VALUES (4, 7, 2007);
+INSERT INTO LOCATION (shelfID, rowNumber, bookID)
+VALUES (6, 1, 2008);
+INSERT INTO LOCATION (shelfID, rowNumber, bookID)
+VALUES (6, 4, 2009);
+INSERT INTO LOCATION (shelfID, rowNumber, bookID)
+VALUES (8, 10, 2010);
+
+--
+-- Inserting dummy data into Book
+--
+INSERT INTO BOOK (title, author, copies, locationID)
+VALUES ('Bambi', 'Felix Salten', 5, 3001);
+INSERT INTO BOOK (title, author, copies, locationID)
+VALUES ('Faraway Child', 'Amy Maida Wadsworth',	3, 3002);
+INSERT INTO BOOK (title, author, copies, locationID)
+VALUES ('Lion King', 'Don Ferguson', 11, 3003);
+INSERT INTO BOOK (title, author, copies, locationID)
+VALUES ('The Silver Sun', 'Nancy Springer',	9, 3003);
+INSERT INTO BOOK (title, author, copies, locationID)
+VALUES ('Eye of Sierras', 'Robin Jones Gunn', 13, 3004);
+INSERT INTO BOOK (title, author, copies, locationID)
+VALUES ('The Path\'s Secrets', 'Sayyid Haydar Amuli', 5, 3005);
+INSERT INTO BOOK (title, author, copies, locationID)
+VALUES ('Evening in the Ashes',	'Dorothy Love',	20,	3006);
+INSERT INTO BOOK (title, author, copies, locationID)
+VALUES ('The Sage and the Lace', 'James Dove', 4, 3007);
+INSERT INTO BOOK (title, author, copies, locationID)
+VALUES ('Database Systems',	'Jennifer Widom', 1, 3008);
+INSERT INTO BOOK (title, author, copies, locationID)
+VALUES ('Every Perfect Gift', 'Dorothy Love', 5, 3009);
+INSERT INTO BOOK (title, author, copies, locationID)
+VALUES ('Everything We Have', 'Dorothy Love', 5, 3010);
+
+--
+-- Inserting dummy data into Loan
+--
+
+
+--
+-- Inserting dummy data into Employee
+--
+
+
+--
+-- Inserting dummy data into Archive 
+--
