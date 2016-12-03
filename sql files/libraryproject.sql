@@ -88,7 +88,26 @@ ALTER table ARCHIVE AUTO_INCREMENT = 9001;
 --
 -- Inserting dummy data into User
 --
-
+INSERT INTO USER (name, isEmployee, borrowed, birthday, fees, updatedOn)
+VALUES ("Alice",1,1,'2000-10-10',0.0,'2016-12-3 12:30:00');
+INSERT INTO USER (name, isEmployee, borrowed, birthday, fees, updatedOn)
+VALUES ("Bob",1,0,'2000-10-10',0.0,'2016-12-3 12:30:00');
+INSERT INTO USER (name, isEmployee, borrowed, birthday, fees, updatedOn)
+VALUES ("Jerry",1,0,'2000-10-10',0.0,'2016-12-3 12:30:00');
+INSERT INTO USER (name, isEmployee, borrowed, birthday, fees, updatedOn)
+VALUES ("Carrie",1,0,'2000-10-10',0.0,'2016-12-3 12:30:00');
+INSERT INTO USER (name, isEmployee, borrowed, birthday, fees, updatedOn)
+VALUES ("Xavier",1,0,'2000-10-10',0.0,'2016-12-3 12:30:00');
+INSERT INTO USER (name, isEmployee, borrowed, birthday, fees, updatedOn)
+VALUES ("Kelly",0,1,'2010-10-10',0.0,'2016-12-3 12:30:00');
+INSERT INTO USER (name, isEmployee, borrowed, birthday, fees, updatedOn)
+VALUES ("Leon",0,0,'2000-10-10',0.0,'2016-12-3 12:30:00');
+INSERT INTO USER (name, isEmployee, borrowed, birthday, fees, updatedOn)
+VALUES ("Daniel",0,0,'2009-10-10',0.0,'2016-12-3 12:30:00');
+INSERT INTO USER (name, isEmployee, borrowed, birthday, fees, updatedOn)
+VALUES ("George",0,0,'2003-10-10',0.0,'2016-12-3 12:30:00');
+INSERT INTO USER (name, isEmployee, borrowed, birthday, fees, updatedOn)
+VALUES ("Eleanor",0,0,'2000-10-10',0.0,'2016-12-3 12:30:00');
 
 --
 -- Inserting dummy data into Location
@@ -143,12 +162,24 @@ VALUES ('Everything We Have', 'Dorothy Love', 5, 3010);
 --
 -- Inserting dummy data into Loan
 --
-
+INSERT INTO LOAN(uID,bookID,checkoutDate,dueDate,overdue)
+VALUES(1,2001,'2016-12-3','2016-12-10',0);
+INSERT INTO LOAN(uID,bookID,checkoutDate,dueDate,overdue)
+VALUES(6,2002,'2016-12-3','2016-12-10',0);
 
 --
 -- Inserting dummy data into Employee
 --
-
+Insert into employee(uID, department, name, date, employeePIN )  
+VALUES (1 ,'deptName', 'Alice', '2016-11-08',	10101);
+Insert into employee(uID, department, name, date, employeePIN)  
+VALUES (2 ,'deptName',	'Bob' ,'2016-11-08',	22222);
+Insert into employee(uID, department, name, date, employeePIN)  
+VALUES (3,'deptName',	'Jerry'	,'2016-11-08',	12345);
+Insert into employee(uID, department, name, date, employeePIN)  
+VALUES ( 4,'deptName',	'Carrie',	'2016-11-08',	43215);
+Insert into employee(uID, department, name, date, employeePIN)  
+VALUES (5,'deptName', 'Xavier',	'2016-11-08',	55555);
 
 --
 -- Inserting dummy data into Archive 
