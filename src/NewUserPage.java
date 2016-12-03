@@ -2,18 +2,32 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
+
+import com.mysql.jdbc.Connection;
 
 public class NewUserPage extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField nameTextfield;
 	private JTextField birthdayTextfield;
+	private String username = "";
+	private Date dob = null;
+	private String dateofBirth;
+
 
 	/**
 	 * Launch the application.
@@ -59,19 +73,78 @@ public class NewUserPage extends JFrame {
 		nameTextfield.setBounds(157, 78, 121, 20);
 		contentPane.add(nameTextfield);
 		nameTextfield.setColumns(10);
+		username = nameTextfield.getText();
 		
 		birthdayTextfield = new JTextField();
 		birthdayTextfield.setColumns(10);
 		birthdayTextfield.setBounds(157, 116, 121, 20);
 		contentPane.add(birthdayTextfield);
 		
+		
+		
+		
+		
 		JButton createUserButton = new JButton("Create User");
 		createUserButton.setBounds(171, 177, 91, 23);
 		contentPane.add(createUserButton);
+		createUserButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				DBDemo con = new DBDemo();
+				try {
+					Connection connection = (Connection) con.getConnection();
+					username = nameTextfield.getText();
+					dateofBirth = birthdayTextfield.getText();
+					 
+					
+					String year = dateofBirth.substring(0, 4);
+					int y = Integer.parseInt(year);
+					
+				
+					String month = dateofBirth.substring(5, 7);
+					int m = Integer.parseInt(month);
+					
+					String day = dateofBirth.substring(8, 10);
+					
+					int d = Integer.parseInt(day);
+					dob = new Date(y,m,d);
+					
+					
+					String testQuery = "Insert into user (name, isEmployee, borrowed, birthday, fees) values (?, 0,0,?,0.0)";
+					
+					PreparedStatement ts = connection.prepareStatement(testQuery);
+					ts.setString (1,username);
+				     ts.setDate(2, dob );
+				     
+					ts.executeUpdate();
+					connection.close();
+					JFrame f = new JFrame();
+					
+					JOptionPane.showMessageDialog(f, "Congrats. New User is created. Use the back button to browse library. ");
+					f.setVisible(true);
+					
+					
+					
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 		
 		JButton backButton = new JButton("<");
 		backButton.setBounds(10, 11, 46, 23);
 		contentPane.add(backButton);
+		backButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				MainMenuPage main = new MainMenuPage();
+				main.setVisible(true);
+			}
+		});
+		
 	}
 
 }
+	

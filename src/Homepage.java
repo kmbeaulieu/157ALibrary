@@ -31,6 +31,7 @@ public class Homepage extends JFrame {
 				DBDemo app = new DBDemo();
 				try {
 					app.run();
+					
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

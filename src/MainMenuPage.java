@@ -5,7 +5,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.JButton;
 
 public class MainMenuPage extends JFrame {
@@ -47,6 +51,13 @@ public class MainMenuPage extends JFrame {
 		JButton btnNewButton = new JButton("New User");
 		btnNewButton.setBounds(79, 83, 124, 63);
 		contentPane.add(btnNewButton);
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				NewUserPage frame = new NewUserPage();
+				frame.setVisible(true);	
+			}
+			});
 		
 		JButton btnUserLogin = new JButton("User Login");
 		btnUserLogin.setBounds(240, 83, 124, 63);
@@ -57,8 +68,16 @@ public class MainMenuPage extends JFrame {
 		contentPane.add(btnNewButton_1);
 		
 		JButton btnSearchBooks = new JButton("Search Books");
+		btnSearchBooks.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				SearchBooksPage frame = new SearchBooksPage();
+				frame.setVisible(true);	
+			}
+			});
 		btnSearchBooks.setBounds(79, 157, 124, 63);
 		contentPane.add(btnSearchBooks);
+		
 	}
 
 }
