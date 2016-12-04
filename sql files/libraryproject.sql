@@ -21,9 +21,8 @@ CREATE TABLE LOCATION
 (locationID INT AUTO_INCREMENT,
 shelfID INT,
 rowNumber INT,
-bookID INT,
 CHECK(shelfID>0 and shelfID<11 and rowNumber>0 and rowNumber<21),
-PRIMARY KEY(locationID)
+PRIMARY KEY(locationID, shelfID, rowNumber)
 );
 ALTER table LOCATION AUTO_INCREMENT = 3001;
 
@@ -51,22 +50,24 @@ CREATE TABLE LOAN
  overdue TINYINT DEFAULT 0,
  CHECK(overdue <2),
  PRIMARY KEY(loanID),
- FOREIGN KEY (uID) references User (uID),
+ FOREIGN KEY (uID) references User (uID)
+ ON DELETE CASCADE,
  FOREIGN KEY (bookID) references Book(bookID) 
 ) ;
 ALTER table LOAN AUTO_INCREMENT = 1001;
 
 DROP TABLE IF EXISTS EMPLOYEE;
 CREATE TABLE EMPLOYEE
-(eID INT AUTO_INCREMENT,
+(employeeID INT AUTO_INCREMENT,
 uID INT,
 department VARCHAR(30),
 name VARCHAR(30),
-date DATE DEFAULT '0000-00-00',
+joinDate DATE DEFAULT '0000-00-00',
 employeePIN INT DEFAULT 00000,
 CHECK (employeePIN<=99999),
 PRIMARY KEY (eID),
 FOREIGN KEY (uID) references User(uID)
+ON DELETE CASCADE
 );
 ALTER table EMPLOYEE AUTO_INCREMENT = 4001;
 
@@ -85,11 +86,50 @@ CREATE TABLE ARCHIVE
 ) ;
 ALTER table ARCHIVE AUTO_INCREMENT = 9001;
 
+delimiter //
+CREATE TRIGGER addBorrowed
+AFTER INSERT ON LOAN
+for each row
+BEGIN 
+UPDATE USER SET borrowed=borrowed+1 WHERE new.uID=uID;
+END;//
+
+CREATE TRIGGER remBorrowed
+BEFORE DELETE ON LOAN
+for each row
+BEGIN 
+UPDATE USER SET borrowed=borrowed-1 WHERE old.uID=uID;
+END;//
+
+CREATE TRIGGER remEmployeeStatus
+BEFORE DELETE ON EMPLOYEE
+FOR EACH ROW
+BEGIN
+	UPDATE USER SET isEmployee = 0 WHERE USER.uID=old.uID;
+END;//
+
+CREATE TRIGGER remLoanDelBook
+BEFORE DELETE ON BOOK
+FOR EACH ROW
+BEGIN
+	DELETE FROM LOAN WHERE old.bookID=Loan.bookID;
+    DELETE FROM LOCATION WHERE old.bookID=Location.bookID;
+END;//
+
+CREATE TRIGGER nullBookDelLoc
+BEFORE DELETE ON LOCATION
+FOR EACH ROW
+BEGIN
+	UPDATE BOOK SET locationID=null where Book.locationID=old.locationID;
+END;//
+delimiter ;
+
 --
 -- Inserting dummy data into User
 --
+
 INSERT INTO USER (name, isEmployee, borrowed, birthday, fees, updatedOn)
-VALUES ("Alice",1,1,'2000-10-10',0.0,'2016-12-3 12:30:00');
+VALUES ("Alice",1,0,'2000-10-10',0.0,'2016-12-3 12:30:00');
 INSERT INTO USER (name, isEmployee, borrowed, birthday, fees, updatedOn)
 VALUES ("Bob",1,0,'2000-10-10',0.0,'2016-12-3 12:30:00');
 INSERT INTO USER (name, isEmployee, borrowed, birthday, fees, updatedOn)
@@ -99,7 +139,7 @@ VALUES ("Carrie",1,0,'2000-10-10',0.0,'2016-12-3 12:30:00');
 INSERT INTO USER (name, isEmployee, borrowed, birthday, fees, updatedOn)
 VALUES ("Xavier",1,0,'2000-10-10',0.0,'2016-12-3 12:30:00');
 INSERT INTO USER (name, isEmployee, borrowed, birthday, fees, updatedOn)
-VALUES ("Kelly",0,1,'2010-10-10',0.0,'2016-12-3 12:30:00');
+VALUES ("Kelly",0,0,'2010-10-10',0.0,'2016-12-3 12:30:00');
 INSERT INTO USER (name, isEmployee, borrowed, birthday, fees, updatedOn)
 VALUES ("Leon",0,0,'2000-10-10',0.0,'2016-12-3 12:30:00');
 INSERT INTO USER (name, isEmployee, borrowed, birthday, fees, updatedOn)
@@ -112,26 +152,18 @@ VALUES ("Eleanor",0,0,'2000-10-10',0.0,'2016-12-3 12:30:00');
 --
 -- Inserting dummy data into Location
 --
-INSERT INTO LOCATION (shelfID, rowNumber, bookID)
-VALUES (1, 5, 2001);
-INSERT INTO LOCATION (shelfID, rowNumber, bookID)
-VALUES (1, 2, 2002);
-INSERT INTO LOCATION (shelfID, rowNumber, bookID)
-VALUES (2, 2, 2003);
-INSERT INTO LOCATION (shelfID, rowNumber, bookID)
-VALUES (2, 9, 2004);
-INSERT INTO LOCATION (shelfID, rowNumber, bookID)
-VALUES (3, 1, 2005);
-INSERT INTO LOCATION (shelfID, rowNumber, bookID)
-VALUES (3, 3, 2006);
-INSERT INTO LOCATION (shelfID, rowNumber, bookID)
-VALUES (4, 7, 2007);
-INSERT INTO LOCATION (shelfID, rowNumber, bookID)
-VALUES (6, 1, 2008);
-INSERT INTO LOCATION (shelfID, rowNumber, bookID)
-VALUES (6, 4, 2009);
-INSERT INTO LOCATION (shelfID, rowNumber, bookID)
-VALUES (8, 10, 2010);
+INSERT INTO LOCATION (shelfID, rowNumber)
+VALUES (1, 5);
+INSERT INTO LOCATION (shelfID, rowNumber)
+VALUES (1, 2);
+INSERT INTO LOCATION (shelfID, rowNumber) VALUES (2, 2);
+INSERT INTO LOCATION (shelfID, rowNumber) VALUES (2, 9);
+INSERT INTO LOCATION (shelfID, rowNumber) VALUES (3, 1);
+INSERT INTO LOCATION (shelfID, rowNumber) VALUES (3, 3);
+INSERT INTO LOCATION (shelfID, rowNumber) VALUES (4, 7);
+INSERT INTO LOCATION (shelfID, rowNumber) VALUES (6, 1);
+INSERT INTO LOCATION (shelfID, rowNumber) VALUES (6, 4);
+INSERT INTO LOCATION (shelfID, rowNumber) VALUES (8, 10);
 
 --
 -- Inserting dummy data into Book
@@ -170,15 +202,15 @@ VALUES(6,2002,'2016-12-3','2016-12-10',0);
 --
 -- Inserting dummy data into Employee
 --
-Insert into employee(uID, department, name, date, employeePIN )  
+Insert into employee(uID, department, name, joinDate, employeePIN )  
 VALUES (1 ,'deptName', 'Alice', '2016-11-08',	10101);
-Insert into employee(uID, department, name, date, employeePIN)  
+Insert into employee(uID, department, name, joinDate, employeePIN)  
 VALUES (2 ,'deptName',	'Bob' ,'2016-11-08',	22222);
-Insert into employee(uID, department, name, date, employeePIN)  
+Insert into employee(uID, department, name, joinDate, employeePIN)  
 VALUES (3,'deptName',	'Jerry'	,'2016-11-08',	12345);
-Insert into employee(uID, department, name, date, employeePIN)  
+Insert into employee(uID, department, name, joinDate, employeePIN)  
 VALUES ( 4,'deptName',	'Carrie',	'2016-11-08',	43215);
-Insert into employee(uID, department, name, date, employeePIN)  
+Insert into employee(uID, department, name, joinDate, employeePIN)  
 VALUES (5,'deptName', 'Xavier',	'2016-11-08',	55555);
 
 --

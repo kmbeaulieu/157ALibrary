@@ -260,7 +260,6 @@ public class DBDemo {
 	/* ------------- LOAN METHODS --------------- */
 
 	// Inserting a new loan into loan table
-	@SuppressWarnings("deprecation")
 	public void insertLoan(int uID, int bookID, Date checkoutDate, Date dueDate, int overdue) {
 		Connection conn = null;
 		try {
@@ -299,8 +298,9 @@ public class DBDemo {
 	}
 
 	// --- NEED TO CHANGE FROM VOID TO RETURN USER OBJECT!
-	public void selectLoan(int loanID) {
+	public Loan selectLoan(int loanID) {
 		Connection conn = null;
+		Loan currentLoan = new Loan(0, 0, 0, null, null, 0);
 		try {
 			conn = this.getConnection();
 		} catch (SQLException e1) {
@@ -315,17 +315,31 @@ public class DBDemo {
 			ResultSet rs = preparedStatement.executeQuery();
 			if (rs.next()) {
 				int lID = rs.getInt("loanID");
+				currentLoan.setLoanID(lID);
+				
 				int loanUID = rs.getInt("uID");
+				currentLoan.setUserID(loanUID);
+				
 				int loanBookID = rs.getInt("bookID");
+				currentLoan.setBookID(loanBookID);
+				
 				Date checkoutDate = rs.getDate("checkoutDate");
+				currentLoan.setCheckoutDate(checkoutDate);
+				
 				Date dueDate = rs.getDate("dueDate");
+				currentLoan.setDueDate(dueDate);
+				
 				int overdue = rs.getInt("overdue");
+				currentLoan.setOverdue(overdue);
 			}
 			preparedStatement.close();
+			
 		} catch (SQLException e) {
 			System.out.println("UNABLE TO SELECT LOAN");
 			e.printStackTrace();
 		}
+		
+		return currentLoan;
 	}
 
 	// Delete a loan
@@ -357,6 +371,7 @@ public class DBDemo {
 		
 	}
 	
+	// Update overdue = 1 if there is an overdue
 	public void checkOverdue(int loanID) {
 		selectLoan(loanID);
 		
@@ -633,7 +648,31 @@ public class DBDemo {
 	}
 
 	/* ------------- LOCATION METHODS --------------- */
+	
+	// Creating a new location in location table
+	public void insertLocation(int shelfID, int rowNumber) {
+		Connection conn = null;
+		try {
+			conn = this.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
+		try {
+			PreparedStatement preparedStatement = conn.prepareStatement(
+					"INSERT INTO location (shelfID, rowNumber) VALUES (?, ?)");
+			preparedStatement.setInt(1, shelfID);
+			preparedStatement.setInt(2, rowNumber);
+
+			preparedStatement.execute();
+			preparedStatement.close();
+		} catch (SQLException e) {
+			System.out.println("UNABLE TO INSERT LOCATION");
+			e.printStackTrace();
+		}
+	}
+	
 	// ---------- NEED TO CHANGE FROM VOID TO RETURN LOCATION OBJECT!
 	// Get location info
 	public void selectLocation(int bookID) {
