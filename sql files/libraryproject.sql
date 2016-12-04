@@ -65,7 +65,7 @@ name VARCHAR(30),
 joinDate DATE DEFAULT '0000-00-00',
 employeePIN INT DEFAULT 00000,
 CHECK (employeePIN<=99999),
-PRIMARY KEY (eID),
+PRIMARY KEY (employeeID),
 FOREIGN KEY (uID) references User(uID)
 ON DELETE CASCADE
 );
