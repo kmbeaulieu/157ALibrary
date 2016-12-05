@@ -28,7 +28,7 @@ public class NewUserPage extends JFrame {
 	private String username = "";
 	private Date dob = new Date(0, 0, 0);
 	private String dateofBirth;
-	private DatabaseManager dbm = new DatabaseManager();
+	private DatabaseManager dbm;
 	private User user;
 
 
@@ -58,7 +58,7 @@ public class NewUserPage extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+		 dbm = new DatabaseManager();
 		JLabel lblCreateANew = new JLabel("Create A New User");
 		lblCreateANew.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblCreateANew.setBounds(143, 21, 148, 35);
@@ -100,11 +100,11 @@ public class NewUserPage extends JFrame {
 				System.out.println(month);
 				int day = Integer.parseInt(birthdayTextfield.getText().substring(8, 10));
 				dob.setDate(day);
-				//The month will loop back around. 13 = 0,1 so January. 
+				//The month will loop back around. 13 = 01 so January. 
 				dob.setMonth(month-1);
 				//because Java copied C, Dates use year - 1900 or something like that. This is why there is a magic number to fix this error. 
 				dob.setYear(year-1900);
-				System.out.println(dob.toString());
+				
 				dbm.insertUser(username, dob);
 				User insertedUser = dbm.selectUserDob(username, dob);
 				int UserID = insertedUser.getUid();

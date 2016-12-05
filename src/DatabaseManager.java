@@ -100,10 +100,8 @@ public class DatabaseManager {
 					.prepareStatement("INSERT INTO user (name, birthday) VALUES (?, ?)");
 			preparedStatement.setString(1, name);
 			preparedStatement.setDate(2, birthday);
-			
 			preparedStatement.execute();
 			preparedStatement.close();
-			
 		} catch (SQLException e) {
 			System.out.println("UNABLE TO INSERT USER");
 			e.printStackTrace();
@@ -546,14 +544,14 @@ public class DatabaseManager {
 			e1.printStackTrace();
 		}
 
-		// Get the current date
-		java.util.Date utilDate = new java.util.Date();
-		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-		joinDate = sqlDate;
+//		// Get the current date
+//		java.util.Date utilDate = new java.util.Date();
+//		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+//		joinDate = sqlDate;
 
 		try {
 			PreparedStatement preparedStatement = conn.prepareStatement(
-					"INSERT INTO employee (uID, department, name, joinDate, employeePIN) VALUES (?, ?, ?, ?)");
+					"INSERT INTO employee (uID, department, name, joinDate, employeePIN) VALUES (?, ?, ?, ?, ?)");
 			preparedStatement.setInt(1, uID);
 			preparedStatement.setString(2, department);
 			preparedStatement.setString(3, name);

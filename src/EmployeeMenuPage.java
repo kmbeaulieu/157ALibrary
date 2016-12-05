@@ -74,6 +74,13 @@ public class EmployeeMenuPage extends JFrame {
 		contentPane.add(btnNewEmployee);
 		
 		JButton btnLogOut = new JButton("< Log Out");
+		btnLogOut.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				dispose();
+				new MainMenuPage();
+			}
+			});
 		btnLogOut.setBounds(10, 11, 89, 23);
 		contentPane.add(btnLogOut);
 		

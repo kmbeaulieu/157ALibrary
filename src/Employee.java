@@ -1,4 +1,4 @@
-import java.util.Date;
+import java.sql.Date;
 
 
 public class Employee
@@ -9,6 +9,7 @@ public class Employee
 	private String name;
 	private Date joinDate;
 	private int employeePIN;
+	
 	public Employee(int employeeID, int uID, String department, String name, Date joinDate, int employeePIN)
 	{
 		this.employeeID = employeeID;
@@ -20,6 +21,14 @@ public class Employee
 		
 		
 	}
+	
+	public Employee(String department, String name, Date joinDate, int employeePIN){
+		this.department = department;
+		this.name = name;
+		this.joinDate = joinDate;
+		this.employeePIN = employeePIN;
+	}
+	
 	public int getEmployeeID() {
 		return employeeID;
 	}

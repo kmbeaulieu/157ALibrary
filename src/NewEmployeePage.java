@@ -5,21 +5,26 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Date;
 
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
 public class NewEmployeePage extends JFrame {
 
+	private Date dob = new Date(0, 0, 0);
 	private JPanel contentPane;
 	private JTextField nameTextfield;
 	private JTextField birthdayTextfield;
 	private JTextField pinTextfield;
 	private JTextField departmentTextfield;
+	private DatabaseManager dbm;
+	private String username;
 
 	/**
 	 * Launch the application.
@@ -48,7 +53,8 @@ public class NewEmployeePage extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+		//set up dbm
+		dbm = new DatabaseManager();
 		//set up contents
 		JLabel lblCreateANew = new JLabel("Create A New Employee");
 		lblCreateANew.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -105,6 +111,33 @@ public class NewEmployeePage extends JFrame {
 		JButton btnCreateEmployee = new JButton("Create Employee");
 		btnCreateEmployee.setBounds(166, 206, 132, 23);
 		contentPane.add(btnCreateEmployee);
+		btnCreateEmployee.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+			//	Employee e = new Employee(departmentTextfield.getText(),nameTextfield.getText(),new Date(System.currentTimeMillis()),Integer.parseInt(pinTextfield.getText()));
+				username = nameTextfield.getText();
+				int year = Integer.parseInt(birthdayTextfield.getText().substring(0, 4));
+				int month = Integer.parseInt(birthdayTextfield.getText().substring(5,7));
+				int day = Integer.parseInt(birthdayTextfield.getText().substring(8, 10));
+				dob.setDate(day);
+				//The month will loop back around. 13 = 01 so January. 
+				dob.setMonth(month-1);
+				//because Java copied C, Dates use year - 1900 or something like that. This is why there is a magic number to fix this error. 
+				dob.setYear(year-1900);
+				//System.out.println(e.getName());
+				//first make a user. Then make an employee. All employees are library users.
+				dbm.insertUser(username, dob);
+				int uid = dbm.selectUserDob(username, dob).getUid();
+				Date jd = new Date(System.currentTimeMillis());
+				String dept = departmentTextfield.getText();
+				dbm.insertEmployee( uid, dept, username, jd, Integer.parseInt(pinTextfield.getText()));
+				
+				JOptionPane.showMessageDialog(new JFrame(), "Congrats. Welcome to the team. Use the back button to browse library. Your PIN is " + pinTextfield.getText() + ". "
+						+ "Talk to a supervisor if you forget it. Your library PIN is " + uid +". You can look it up in the database using your employee PIN.");
+				setVisible(true);
+			}
+			});
+		
 		
 		//display page
 		setVisible(true);
