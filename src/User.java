@@ -1,4 +1,4 @@
-import java.util.Date;
+import java.sql.Date;
 
 
 public class User
@@ -20,6 +20,10 @@ public class User
 		this.fees = fees;
 		
 		
+	}
+	
+	public User(Date birthday){
+		this.dob = birthday;
 	}
 
 	public int getUid() {

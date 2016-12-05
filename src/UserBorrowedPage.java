@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Date;
+import java.sql.Date;
 
 import javax.swing.JList;
 import javax.swing.JButton;
@@ -25,7 +25,7 @@ public class UserBorrowedPage extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					UserBorrowedPage frame = new UserBorrowedPage(new User(0,"TEST USER",0,0,new Date(),0.0));
+					UserBorrowedPage frame = new UserBorrowedPage(new User(0,"TEST USER",0,0,new Date(System.currentTimeMillis()),0.0));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

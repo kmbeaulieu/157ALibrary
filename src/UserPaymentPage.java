@@ -11,7 +11,7 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
-import java.util.Date;
+import java.sql.Date;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -28,7 +28,7 @@ public class UserPaymentPage extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					UserPaymentPage frame = new UserPaymentPage(new User(0,"TEST USER",0,0,new Date(),0.0));
+					UserPaymentPage frame = new UserPaymentPage(new User(0,"TEST USER",0,0,new Date(System.currentTimeMillis()),0.0));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
