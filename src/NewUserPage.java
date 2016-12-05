@@ -106,10 +106,10 @@ public class NewUserPage extends JFrame {
 				dob.setYear(year-1900);
 				System.out.println(dob.toString());
 				dbm.insertUser(username, dob);
-				User insertedUser = dbm.selectUser(username, dob);
+				User insertedUser = dbm.selectUserDob(username, dob);
 				int UserID = insertedUser.getUid();
 				
-				JOptionPane.showMessageDialog(new JFrame(), "Congrats. New User is created. Use the back button to browse library. Your userID is " + UserID);
+				JOptionPane.showMessageDialog(new JFrame(), "Congrats. New User is created. Use the back button to browse library. Your PIN is " + UserID + ". Find an employee if you forget it.");
 				setVisible(true);
 				
 				

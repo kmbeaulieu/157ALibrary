@@ -61,17 +61,17 @@ public class DatabaseManager {
 		return conn;
 	}
 
-	/**
-	 * Closes connection to database
-	 */
-	public void disconnect() {
-		Connection conn = null;
-		try {
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+//	/**
+//	 * Closes connection to database
+//	 */
+//	public void disconnect() {
+//		Connection conn.getConnection();
+//		try {
+//			conn.close();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 	/**
 	 * Run a SQL command which does not return a recordset:
@@ -93,43 +93,6 @@ public class DatabaseManager {
 				stmt.close();
 			}
 		}
-	}
-
-	/**
-	 * Connect to MySQL and get all users!
-	 * This is a test run. NOT IN USE ANYMORE.
-	 * 
-	 * @throws SQLException
-	 */
-	public void run() throws SQLException {
-
-		// Connect to MySQL
-		Connection conn = null;
-		try {
-			conn = this.getConnection();
-			System.out.println("Connected to database");
-		} catch (SQLException e) {
-			System.out.println("ERROR: Could not connect to the database");
-			e.printStackTrace();
-			return;
-		}
-
-		String testQuery = "SELECT * FROM user";
-		Statement ts = conn.createStatement();
-		ResultSet rs = ts.executeQuery(testQuery);
-		while (rs.next()) {
-			int uid = rs.getInt("uid");
-			String name = rs.getString("name");
-			int isEmployee = rs.getInt("isEmployee");
-			int borrowed = rs.getInt("borrowed");
-			Date birthday = rs.getDate("birthday");
-			Double fees = rs.getDouble("fees");
-			Timestamp updatedOn = rs.getTimestamp("updatedOn");
-
-			System.out.format("%s,%s,%s,%s,%td,%s,%s%n", uid, name, isEmployee, borrowed, birthday, fees,
-					updatedOn.toString());
-		}
-		ts.close();
 	}
 
 	/* ------------- USER METHODS --------------- */
@@ -160,8 +123,13 @@ public class DatabaseManager {
 		}
 	}
 
-	// --- NEED TO CHANGE FROM VOID TO RETURN USER OBJECT!
-	public User selectUser(String name, Date birthday) {
+	/**
+	 * Find user by name and birthday 
+	 * @param name
+	 * @param birthday in yyyy-mm-dd format
+	 * @return the user it found.
+	 */
+	public User selectUserDob(String name, Date birthday) {
 		User user = null;
 		Connection conn = null;
 		try {
@@ -176,6 +144,45 @@ public class DatabaseManager {
 					"SELECT uID, name, birthday, borrowed, fees FROM user WHERE name = ? AND birthday = ?");
 			preparedStatement.setString(1, name);
 			preparedStatement.setDate(2, birthday);
+			ResultSet rs = preparedStatement.executeQuery();
+			if (rs.next()) {
+				int uID = rs.getInt("uID");
+				String userName = rs.getString("name");
+				Date userBirthday = rs.getDate("birthday");
+				int userBorrowed = rs.getInt("borrowed");
+				double userFees = rs.getDouble("fees");
+				user = new User(uID, userName, 0, userBorrowed, userBirthday, userFees);// 0 for isEmployee
+			}
+			
+			preparedStatement.close();
+		} catch (SQLException e) {
+			System.out.println("UNABLE TO SELECT USER");
+			e.printStackTrace();
+		}
+		return user;
+	}
+	
+	/**
+	 * Find the user by name and id. For logging in purposes
+	 * @param name user's name
+	 * @param pin user's uID
+	 * @return the user it found
+	 */
+	public User selectUser(String name, int pin) {
+		User user = null;
+		Connection conn = null;
+		try {
+			conn = this.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		try {
+			PreparedStatement preparedStatement = conn.prepareStatement(
+					"SELECT uID, name, birthday, borrowed, fees FROM user WHERE name = ? AND uID = ?");
+			preparedStatement.setString(1, name);
+			preparedStatement.setInt(2, pin);
 			ResultSet rs = preparedStatement.executeQuery();
 			if (rs.next()) {
 				int uID = rs.getInt("uID");

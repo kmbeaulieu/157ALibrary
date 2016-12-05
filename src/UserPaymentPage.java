@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Date;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -25,7 +26,7 @@ public class UserPaymentPage extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					UserPaymentPage frame = new UserPaymentPage();
+					UserPaymentPage frame = new UserPaymentPage(new User(0,"TEST USER",0,0,new Date(),0.0));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -36,8 +37,10 @@ public class UserPaymentPage extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * 
+	 * @param user the user passed in
 	 */
-	public UserPaymentPage() {
+	public UserPaymentPage(User usr) {
 		//create frame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
@@ -45,6 +48,8 @@ public class UserPaymentPage extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		//fill in passed in info, set up database connection
+		final User user = usr;
 		//create content
 		JLabel lblUserPayment = new JLabel("User Payment");
 		lblUserPayment.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -52,14 +57,14 @@ public class UserPaymentPage extends JFrame {
 		contentPane.add(lblUserPayment);
 		
 		JLabel lblFeesDue = new JLabel("Fees Due:");
-		lblFeesDue.setBounds(119, 76, 49, 14);
+		lblFeesDue.setBounds(119, 76, 100, 14);
 		contentPane.add(lblFeesDue);
 		
 		JLabel lblPaymentAmount = new JLabel("Payment Amount:");
-		lblPaymentAmount.setBounds(82, 121, 86, 14);
+		lblPaymentAmount.setBounds(82, 121, 100, 14);
 		contentPane.add(lblPaymentAmount);
 		
-		JLabel feesLabel = new JLabel("______________");
+		JLabel feesLabel = new JLabel("$ " + user.getFees());
 		feesLabel.setBounds(178, 76, 86, 14);
 		contentPane.add(feesLabel);
 		
@@ -68,7 +73,7 @@ public class UserPaymentPage extends JFrame {
 		contentPane.add(payNowButton);
 		
 		JFormattedTextField paymentAmountTextfield = new JFormattedTextField();
-		paymentAmountTextfield.setBounds(178, 118, 86, 20);
+		paymentAmountTextfield.setBounds(185, 118, 86, 20);
 		contentPane.add(paymentAmountTextfield);
 		
 		JButton button = new JButton("<");
@@ -76,7 +81,7 @@ public class UserPaymentPage extends JFrame {
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
 			dispose();
-			new UserProfilePage();
+			new UserProfilePage(user);
 		}
 	});
 		button.setBounds(10, 11, 46, 23);

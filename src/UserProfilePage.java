@@ -9,12 +9,14 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Date;
 
 import javax.swing.JButton;
 
 public class UserProfilePage extends JFrame {
 
 	private JPanel contentPane;
+	private User user;
 
 	/**
 	 * Launch the application.
@@ -23,7 +25,7 @@ public class UserProfilePage extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					UserProfilePage frame = new UserProfilePage();
+					UserProfilePage frame = new UserProfilePage(new User(0,"TEST USER",0,0,new Date(),0.0));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -34,8 +36,9 @@ public class UserProfilePage extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param usr the user passed in
 	 */
-	public UserProfilePage() {
+	public UserProfilePage(User usr) {
 		//create frame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
@@ -44,6 +47,9 @@ public class UserProfilePage extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		//fill in passed in info
+		user = usr;
+		
 		//create content
 		JLabel lblUserProfile = new JLabel("User Profile");
 		lblUserProfile.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -51,35 +57,35 @@ public class UserProfilePage extends JFrame {
 		contentPane.add(lblUserProfile);
 		
 		JLabel lblName = new JLabel("Name:");
-		lblName.setBounds(125, 66, 36, 14);
+		lblName.setBounds(125, 66, 50, 14);
 		contentPane.add(lblName);
 		
 		JLabel lblBirthday = new JLabel("Birthday:");
-		lblBirthday.setBounds(115, 105, 46, 14);
+		lblBirthday.setBounds(115, 105, 50, 14);
 		contentPane.add(lblBirthday);
 		
-		JLabel lblFeesDue = new JLabel("Fees Due:");
-		lblFeesDue.setBounds(111, 150, 50, 14);
+		JLabel lblFeesDue = new JLabel("Fees Due: $");
+		lblFeesDue.setBounds(111, 150, 100, 14);
 		contentPane.add(lblFeesDue);
 		
 		JLabel lblBooksBorrowed = new JLabel("Books Borrowed:");
-		lblBooksBorrowed.setBounds(80, 199, 88, 14);
+		lblBooksBorrowed.setBounds(80, 199, 500, 14);
 		contentPane.add(lblBooksBorrowed);
 		
-		JLabel nameLabel = new JLabel("__________________");
+		JLabel nameLabel = new JLabel(user.getName());
 		nameLabel.setBounds(171, 66, 108, 14);
 		contentPane.add(nameLabel);
 		
-		JLabel birthdayLabel = new JLabel("__________________");
-		birthdayLabel.setBounds(171, 105, 108, 14);
+		JLabel birthdayLabel = new JLabel(user.getDob().toString());
+		birthdayLabel.setBounds(171, 105, 200, 14);
 		contentPane.add(birthdayLabel);
 		
-		JLabel feesLabel = new JLabel("__________________");
-		feesLabel.setBounds(171, 150, 108, 14);
+		JLabel feesLabel = new JLabel(String.valueOf(user.getFees()));
+		feesLabel.setBounds(180, 150, 150, 14);
 		contentPane.add(feesLabel);
 		
-		JLabel borrowedBooksLabel = new JLabel("__________________");
-		borrowedBooksLabel.setBounds(171, 199, 108, 14);
+		JLabel borrowedBooksLabel = new JLabel(String.valueOf(user.getBorrowed()));
+		borrowedBooksLabel.setBounds(180, 200, 108, 14);
 		contentPane.add(borrowedBooksLabel);
 		
 		JButton btnBack = new JButton("<");
@@ -98,7 +104,7 @@ public class UserProfilePage extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				dispose();
-				new UserPaymentPage();
+				new UserPaymentPage(user);
 			}
 		});
 		btnPayNow.setBounds(289, 146, 89, 23);
@@ -109,7 +115,7 @@ public class UserProfilePage extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				dispose();
-				new UserBorrowedPage();
+				new UserBorrowedPage(user);
 			}
 		});
 		btnMoreInfo.setBounds(289, 195, 89, 23);

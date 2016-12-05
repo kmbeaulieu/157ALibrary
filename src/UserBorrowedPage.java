@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Date;
 
 import javax.swing.JList;
 import javax.swing.JButton;
@@ -24,7 +25,7 @@ public class UserBorrowedPage extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					UserBorrowedPage frame = new UserBorrowedPage();
+					UserBorrowedPage frame = new UserBorrowedPage(new User(0,"TEST USER",0,0,new Date(),0.0));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -35,8 +36,9 @@ public class UserBorrowedPage extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param user passed in user value
 	 */
-	public UserBorrowedPage() {
+	public UserBorrowedPage(final User user) {
 		//set up frame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
@@ -55,7 +57,7 @@ public class UserBorrowedPage extends JFrame {
 		btnBack.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				UserProfilePage frame = new UserProfilePage();
+				UserProfilePage frame = new UserProfilePage(user);
 				frame.setVisible(true);	
 			}
 			});
