@@ -25,8 +25,10 @@ public class NewUserPage extends JFrame {
 	private JTextField nameTextfield;
 	private JTextField birthdayTextfield;
 	private String username = "";
-	private Date dob = null;
+	private Date dob = new Date(0, 0, 0);
 	private String dateofBirth;
+	private DBDemo con = new DBDemo();
+	private User user;
 
 
 	/**
@@ -62,34 +64,57 @@ public class NewUserPage extends JFrame {
 		contentPane.add(lblCreateANew);
 		
 		JLabel lblName = new JLabel("Name:");
-		lblName.setBounds(122, 81, 31, 14);
+		lblName.setBounds(122, 81, 100, 14);
 		contentPane.add(lblName);
 		
 		JLabel lblBirthday = new JLabel("Birthday:");
-		lblBirthday.setBounds(107, 119, 46, 14);
+		lblBirthday.setBounds(107, 119, 100, 14);
 		contentPane.add(lblBirthday);
 		
 		nameTextfield = new JTextField();
-		nameTextfield.setBounds(157, 78, 121, 20);
+		nameTextfield.setBounds(165, 78, 121, 20);
 		contentPane.add(nameTextfield);
 		nameTextfield.setColumns(10);
 		username = nameTextfield.getText();
 		
 		birthdayTextfield = new JTextField();
 		birthdayTextfield.setColumns(10);
-		birthdayTextfield.setBounds(157, 116, 121, 20);
+		birthdayTextfield.setBounds(165, 116, 121, 20);
 		contentPane.add(birthdayTextfield);
 		
 		
 		
 		
 		
+		
+		
+		
 		JButton createUserButton = new JButton("Create User");
-		createUserButton.setBounds(171, 177, 91, 23);
+		createUserButton.setBounds(150, 177, 150, 25);
 		contentPane.add(createUserButton);
 		createUserButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				username = nameTextfield.getText();
+				
+				int year = Integer.parseInt(birthdayTextfield.getText().substring(0, 4));
+				int month = Integer.parseInt(birthdayTextfield.getText().substring(5,7));
+				int day = Integer.parseInt(birthdayTextfield.getText().substring(8, 10));
+				dob.setDate(day);
+				dob.setMonth(month);
+				dob.setYear(year);
+				
+				con.insertUser(username, dob);
+				User insertedUser = con.selectUser(username, dob);
+				int UserID = insertedUser.getUid();
+				
+				JFrame f = new JFrame();
+				
+				JOptionPane.showMessageDialog(f, "Congrats. New User is created. Use the back button to browse library. Your userID is " + UserID);
+				f.setVisible(true);
+				
+				
+				/*
 				DBDemo con = new DBDemo();
 				try {
 					Connection connection = (Connection) con.getConnection();
@@ -130,6 +155,8 @@ public class NewUserPage extends JFrame {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
+				*/
 			}
 		});
 		

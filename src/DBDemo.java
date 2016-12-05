@@ -8,9 +8,12 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Properties;
+
+import javax.swing.JFrame;
 
 /**
  * This is the Database Java file. In it are all database related functions. (connect/disconnect/queries)
@@ -20,14 +23,22 @@ public class DBDemo {
 	/** The name of the MySQL account */
 	private final String userName = "root";
 
+<<<<<<< HEAD
 	/** The password for the MySQL account*/
+=======
+	/** The password for the MySQL account (or empty for anonymous) */
+>>>>>>> 99b8cc5353645a2fb223e82be08f3db2ce77ce16
 	private final String password = "root";
 
 	/** The name of the computer running MySQL */
-	private final String serverName = "127.0.0.1";
+	private final String serverName = "localhost";
 
 	/** The port of the MySQL server (default is 3306) */
 	private final int portNumber = 3306;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 99b8cc5353645a2fb223e82be08f3db2ce77ce16
 
 	/**
 	 * The name of the database we are using is libraryProject.
@@ -132,7 +143,7 @@ public class DBDemo {
 	/* ------------- USER METHODS --------------- */
 
 	// Creating a new user in user table
-	private void insertUser(String name, Date birthday) {
+	public void insertUser(String name, Date birthday) {
 		Connection conn = null;
 		try {
 			conn = this.getConnection();
@@ -149,14 +160,17 @@ public class DBDemo {
 
 			preparedStatement.execute();
 			preparedStatement.close();
+			
 		} catch (SQLException e) {
 			System.out.println("UNABLE TO INSERT USER");
 			e.printStackTrace();
+			
 		}
 	}
 
 	// --- NEED TO CHANGE FROM VOID TO RETURN USER OBJECT!
-	public void selectUser(String name, Date birthday) {
+	public User selectUser(String name, Date birthday) {
+		User user = null;
 		Connection conn = null;
 		try {
 			conn = this.getConnection();
@@ -177,12 +191,15 @@ public class DBDemo {
 				Date userBirthday = rs.getDate("birthday");
 				int userBorrowed = rs.getInt("borrowed");
 				double userFees = rs.getDouble("fees");
+				user = new User(uID, userName, 0, userBorrowed, userBirthday, userFees);// 0 for isEmployee
 			}
+			
 			preparedStatement.close();
 		} catch (SQLException e) {
 			System.out.println("UNABLE TO SELECT USER");
 			e.printStackTrace();
 		}
+		return user;
 	}
 
 	// Update user's name in user table
@@ -455,7 +472,9 @@ public class DBDemo {
 	}
 
 	// Search book using title
-	public void searchBookTitle(String title) {
+	public ArrayList<Book> searchBookTitle(String title) {
+		ArrayList<Book> books = new ArrayList<Book>();
+		
 		Connection conn = null;
 		try {
 			conn = this.getConnection();
@@ -465,22 +484,37 @@ public class DBDemo {
 		}
 
 		try {
-			PreparedStatement preparedStatement = conn
-					.prepareStatement("SELECT bookID, title, author, copies, locationID FROM book WHERE bookID = ?");
-			preparedStatement.setString(1, title);
+			PreparedStatement preparedStatement = null;
+			if(title.isEmpty())
+			{
+			
+				 preparedStatement = conn
+						.prepareStatement("SELECT bookID, title, author, copies, locationID FROM book");
+				
+			}
+			else
+			{
+				preparedStatement = conn
+					.prepareStatement("SELECT bookID, title, author, copies, locationID FROM book WHERE title = ?");
+				preparedStatement.setString(1, title);
+			}
 			ResultSet rs = preparedStatement.executeQuery();
-			if (rs.next()) {
+			while(rs.next()) {
 				int bookID = rs.getInt("bookID");
 				String bookTitle = rs.getString("title");
 				String bookAuthor = rs.getString("author");
 				int copies = rs.getInt("copies");
 				int locationID = rs.getInt("locationID");
+				Book book = new Book(bookID, bookTitle, bookAuthor, copies, locationID);
+				books.add(book);
+				
 			}
 			preparedStatement.close();
 		} catch (SQLException e) {
 			System.out.println("UNABLE TO SELECT BOOK");
 			e.printStackTrace();
 		}
+		return books;
 	}
 
 	/* ------------- EMPLOYEE METHODS --------------- */
@@ -677,7 +711,7 @@ public class DBDemo {
 	 * stuff
 	 */
 	public static void main(String[] args) {
-		Homepage hp = new Homepage();
+		MainMenuPage hp = new MainMenuPage();
 		hp.setVisible(true);
 
 	}

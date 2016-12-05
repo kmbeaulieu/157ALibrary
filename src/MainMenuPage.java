@@ -22,6 +22,7 @@ public class MainMenuPage extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+<<<<<<< HEAD
 		/*
 		 * All things I have seen have used swing utilities instead of event queue. 
 		 */
@@ -50,6 +51,19 @@ public class MainMenuPage extends JFrame {
 	        });
 	    }
 	
+=======
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					//MainMenuPage frame = new MainMenuPage();
+					//frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+>>>>>>> 99b8cc5353645a2fb223e82be08f3db2ce77ce16
 
 	/**
 	 * Create the frame.
@@ -80,12 +94,29 @@ public class MainMenuPage extends JFrame {
 			});
 		
 		JButton btnUserLogin = new JButton("User Login");
+		btnUserLogin.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				UserLoginPage	 frame = new UserLoginPage();
+				frame.setVisible(true);	
+			}
+			});
 		btnUserLogin.setBounds(240, 83, 124, 63);
 		contentPane.add(btnUserLogin);
 		
+		
+		
 		JButton btnNewButton_1 = new JButton("Employee Console");
-		btnNewButton_1.setBounds(240, 157, 124, 63);
+		btnNewButton_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				EmployeeLoginPage frame = new EmployeeLoginPage();
+				frame.setVisible(true);	
+			}
+			});
+		btnNewButton_1.setBounds(240, 157, 130, 63);
 		contentPane.add(btnNewButton_1);
+		
 		
 		JButton btnSearchBooks = new JButton("Search Books");
 		btnSearchBooks.addMouseListener(new MouseAdapter() {
@@ -100,6 +131,7 @@ public class MainMenuPage extends JFrame {
 		btnSearchBooks.setBounds(79, 157, 124, 63);
 		contentPane.add(btnSearchBooks);
 		setVisible(true);
+		
 		
 	}
 
