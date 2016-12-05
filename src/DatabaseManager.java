@@ -703,7 +703,7 @@ public class DatabaseManager {
 	
 	// ---------- NEED TO CHANGE FROM VOID TO RETURN LOCATION OBJECT!
 	// Get location info
-	public Location selectLocation(int bookID) {
+	public Location selectLocation(int locationID) {
 		Location location = null;
 		Connection conn = null;
 		try {
@@ -715,14 +715,14 @@ public class DatabaseManager {
 
 		try {
 			PreparedStatement preparedStatement = conn
-					.prepareStatement("SELECT locationID, shelfID, rowNumber FROM location WHERE bookID = ?");
-			preparedStatement.setInt(1, bookID);
+					.prepareStatement("SELECT locationID, shelfID, rowNumber FROM location WHERE locationID = ?");
+			preparedStatement.setInt(1, locationID);
 			ResultSet rs = preparedStatement.executeQuery();
 			if (rs.next()) {
-				int locationID = rs.getInt("locationID");
+				int locID = rs.getInt("locationID");
 				int shelfID = rs.getInt("shelfID");
 				int rowNumber = rs.getInt("rowNumber");
-				location = new Location(locationID, shelfID,rowNumber);
+				location = new Location(locID, shelfID,rowNumber);
 			}
 			preparedStatement.close();
 		} catch (SQLException e) {

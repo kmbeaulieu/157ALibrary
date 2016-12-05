@@ -46,8 +46,8 @@ public class BookDetailsPage extends JFrame {
 	public BookDetailsPage(int BookID) {
 		//create frame
 		this.bookID = BookID;
-		 book = dbm.selectBook(BookID);
-		 location = dbm.selectLocation(BookID);
+		 book = dbm.selectBook(bookID);
+		 location = dbm.selectLocation(book.getLocationId());
 		//System.out.println(book.getAuthor());
 		//System.out.println(location.getShelfId());
 		
