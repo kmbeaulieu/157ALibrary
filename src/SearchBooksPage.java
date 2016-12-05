@@ -129,10 +129,6 @@ public class SearchBooksPage extends JFrame {
 					e.printStackTrace();
 				}
 				*/
-				
-		
-<<<<<<< HEAD
-=======
 		
 		});
 		
@@ -149,9 +145,6 @@ public class SearchBooksPage extends JFrame {
 		selectButton.setBounds(100, 200, 80, 25);
 		contentPane.add(selectButton);
 	
-		
-		
->>>>>>> 99b8cc5353645a2fb223e82be08f3db2ce77ce16
 		JButton btnBack = new JButton("<");
 		btnBack.addMouseListener(new MouseAdapter() {
 			@Override
@@ -162,11 +155,9 @@ public class SearchBooksPage extends JFrame {
 		});
 		btnBack.setBounds(10, 11, 46, 23);
 		contentPane.add(btnBack);
-<<<<<<< HEAD
+
 		setVisible(true);
-=======
-		
->>>>>>> 99b8cc5353645a2fb223e82be08f3db2ce77ce16
+
 	}
 
 }

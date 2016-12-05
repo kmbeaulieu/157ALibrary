@@ -83,12 +83,6 @@ public class NewUserPage extends JFrame {
 		contentPane.add(birthdayTextfield);
 		
 		
-		
-		
-		
-		
-		
-		
 		JButton createUserButton = new JButton("Create User");
 		createUserButton.setBounds(150, 177, 150, 25);
 		contentPane.add(createUserButton);

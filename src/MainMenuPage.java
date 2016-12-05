@@ -22,7 +22,6 @@ public class MainMenuPage extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-<<<<<<< HEAD
 		/*
 		 * All things I have seen have used swing utilities instead of event queue. 
 		 */
@@ -50,20 +49,7 @@ public class MainMenuPage extends JFrame {
 
 	        });
 	    }
-	
-=======
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					//MainMenuPage frame = new MainMenuPage();
-					//frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
->>>>>>> 99b8cc5353645a2fb223e82be08f3db2ce77ce16
+
 
 	/**
 	 * Create the frame.

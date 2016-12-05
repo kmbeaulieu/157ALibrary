@@ -23,11 +23,7 @@ public class DBDemo {
 	/** The name of the MySQL account */
 	private final String userName = "root";
 
-<<<<<<< HEAD
 	/** The password for the MySQL account*/
-=======
-	/** The password for the MySQL account (or empty for anonymous) */
->>>>>>> 99b8cc5353645a2fb223e82be08f3db2ce77ce16
 	private final String password = "root";
 
 	/** The name of the computer running MySQL */
@@ -35,10 +31,6 @@ public class DBDemo {
 
 	/** The port of the MySQL server (default is 3306) */
 	private final int portNumber = 3306;
-<<<<<<< HEAD
-=======
-
->>>>>>> 99b8cc5353645a2fb223e82be08f3db2ce77ce16
 
 	/**
 	 * The name of the database we are using is libraryProject.
