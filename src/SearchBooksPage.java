@@ -80,7 +80,6 @@ public class SearchBooksPage extends JFrame {
 		searchBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				
 					 bookToSearch = searchTextfield.getText();
 					 ArrayList<Book> books = con.searchBookTitle(bookToSearch);
 					 String[] columnNames = {"BookID", "Title", "Author", "Copies", "LocationID"};
@@ -91,73 +90,20 @@ public class SearchBooksPage extends JFrame {
 					 table.setBounds(50, 100,400, 300);
 					 contentPane.add(table);
 					 contentPane.repaint();
-					
-					 
-					 for(int i = 0; i < books.size(); i++)
-					 {
-						 
-						// System.out.format("%s,%s,%s,%s,%s", books.get(i).getBookId(),  books.get(i).getTitle()
-							//	 ,  books.get(i).getAuthor(),  books.get(i).getCopies(),  books.get(i).getLocationId());
-						 
-					 }
 				}
 					 
-					 
 				
-				
-				
-				
-				/*
-				DatabaseManager con = new DatabaseManager();
-				try {
-					 bookToSearch = searchTextfield.getText();
-					Connection connection = (Connection) con.getConnection();
-					
-					String testQuery = "SELECT * FROM book where title=?";
-					
-					PreparedStatement ts = connection.prepareStatement(testQuery);
-					ts.setString (1,bookToSearch);
-					
-					ResultSet rs = ts.executeQuery();
-					
-					while(rs.next()){
-						int uid = rs.getInt("bookID");
-						String title = rs.getString("title");
-						String author = rs.getString("author");
-						int copies = rs.getInt("copies");
-						int locID = rs.getInt("locationID");
-						System.out.format("%s,%s,%s,%s,%s", uid, title, author, copies, locID);
-
-						
-					}
-					ts.close();
-					connection.close();
-				
-				
-			}
-				catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				*/
 		
 		});
-		
-		
 		
 		JButton selectButton = new JButton("select");
 		selectButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				int s=  table.getSelectedRow();
-				int bookID = (int) table.getValueAt(s, 0);
-				
-				
-				
-				
-				
+				int bookID = (int) table.getValueAt(s, 0);	
+				//new page
 				dispose();
-				
 				new BookDetailsPage(bookID);
 				
 			}

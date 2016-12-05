@@ -1,6 +1,3 @@
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -10,43 +7,29 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.SQLException;
 
 import javax.swing.JButton;
 
 public class MainMenuPage extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		/*
-		 * All things I have seen have used swing utilities instead of event queue. 
-		 */
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					MainMenuPage frame = new MainMenuPage();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
 		 SwingUtilities.invokeLater(new Runnable(){
 
 	            @Override
 	            public void run()
 	            {
-	            	//set up DB. Might not need this since each class will handle the DB functions.
-	            	DatabaseManager db = new DatabaseManager();
-	            	
 	            	//Set up page
 	                new MainMenuPage().setVisible(true);
 	            }
-
 	        });
 	    }
 
@@ -68,6 +51,7 @@ public class MainMenuPage extends JFrame {
 		lblWelcomeToApple.setBounds(102, 28, 249, 28);
 		contentPane.add(lblWelcomeToApple);
 		
+		//button and function
 		JButton btnNewButton = new JButton("New User");
 		btnNewButton.setBounds(79, 83, 140, 63);
 		contentPane.add(btnNewButton);

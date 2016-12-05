@@ -85,7 +85,11 @@ public class DatabaseManager {
 
 	/* ------------- USER METHODS --------------- */
 
-	// Creating a new user in user table
+	/**
+	 * insert a new user via name and birthday (new user page)
+	 * @param name person's first name
+	 * @param birthday person's birthday date
+	 */
 	public void insertUser(String name, Date birthday) {
 		Connection conn = null;
 		try {
@@ -187,7 +191,11 @@ public class DatabaseManager {
 		return user;
 	}
 
-	// Update user's name in user table
+	/**
+	 * Update user's name
+	 * @param uID user's "pin" aka user id
+	 * @param name new name
+	 */
 	public void updateUser(int uID, String name) {
 		Connection conn = null;
 		try {
@@ -239,25 +247,38 @@ public class DatabaseManager {
 		return currentFees;
 		
 	}
-	// Delete user from user table
-	public void deleteUser(int uID) {
-		Connection conn = null;
-		try {
-			conn = this.getConnection();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+	
+	/**
+	 * Delete a user account
+	 * @param uID
+	 * @throws SQLException 
+	 */
+	public void deleteUser(int uID) throws SQLException {
+		Connection conn =  this.getConnection();
+		PreparedStatement preparedStatement = conn.prepareStatement("DELETE FROM user WHERE uID = ?");
+		preparedStatement.setInt(1, uID);
 
-		try {
-			PreparedStatement preparedStatement = conn.prepareStatement("DELETE FROM user WHERE uID = ?");
-			preparedStatement.setInt(1, uID);
-
-			preparedStatement.execute();
-			preparedStatement.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		preparedStatement.execute();
+		preparedStatement.close();
+	}
+	/**
+	 * This selects all users who are not employees (just regular library users). This group of people 
+	 * @return list of names that are users but not employees
+	 * @throws SQLException 
+	 */
+	public ArrayList<User> selectNonemployeeUsers() throws SQLException{
+		Connection conn = getConnection();
+		PreparedStatement ps = conn.prepareStatement("select uID,name from user where uID not in (select uID from employee)");
+		ResultSet rs = ps.executeQuery();
+		ArrayList<User> users = new ArrayList<User>();
+		while(rs.next()){
+			int uid = rs.getInt(1);
+			String name = rs.getString(2);
+			users.add(new User(uid,name));
 		}
+		ps.close();
+
+		return users;
 	}
 
 	/* ------------- LOAN METHODS --------------- */
@@ -692,7 +713,6 @@ public class DatabaseManager {
 					"INSERT INTO location (shelfID, rowNumber) VALUES (?, ?)");
 			preparedStatement.setInt(1, shelfID);
 			preparedStatement.setInt(2, rowNumber);
-
 			preparedStatement.execute();
 			preparedStatement.close();
 		} catch (SQLException e) {
@@ -703,17 +723,9 @@ public class DatabaseManager {
 	
 	// ---------- NEED TO CHANGE FROM VOID TO RETURN LOCATION OBJECT!
 	// Get location info
-	public Location selectLocation(int locationID) {
+	public Location selectLocation(int locationID) throws SQLException {
 		Location location = null;
-		Connection conn = null;
-		try {
-			conn = this.getConnection();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		try {
+		Connection conn = this.getConnection();
 			PreparedStatement preparedStatement = conn
 					.prepareStatement("SELECT locationID, shelfID, rowNumber FROM location WHERE locationID = ?");
 			preparedStatement.setInt(1, locationID);
@@ -725,21 +737,20 @@ public class DatabaseManager {
 				location = new Location(locID, shelfID,rowNumber);
 			}
 			preparedStatement.close();
-		} catch (SQLException e) {
-			System.out.println("UNABLE TO SELECT LOCATION");
-			e.printStackTrace();
-		}
 		
 		return location;
 	}
 
 	/**
-	 * Make a window. connect to the database. Connect to the DB and do some
-	 * stuff
+	 * This throws all users updated before now into the archive.
+	 * @throws SQLException
 	 */
-	public static void main(String[] args) {
-		MainMenuPage hp = new MainMenuPage();
-		hp.setVisible(true);
-
+	public void archive() throws SQLException {
+		// TODO Auto-generated method stub
+		Connection conn = getConnection();
+		PreparedStatement ps = conn.prepareStatement("INSERT INTO ARCHIVE (SELECT * FROM USER WHERE updatedOn<?)");
+		ps.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
+		ps.execute();
+		ps.close();
 	}
 }

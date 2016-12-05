@@ -5,12 +5,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Date;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 
 public class EmployeeMenuPage extends JFrame {
 
@@ -50,7 +54,7 @@ public class EmployeeMenuPage extends JFrame {
 		lblEmployeePortal.setBounds(145, 22, 140, 28);
 		contentPane.add(lblEmployeePortal);
 		
-		JButton btnUserRecords = new JButton("User Records");
+		JButton btnUserRecords = new JButton("Non-Employee User Records");
 		btnUserRecords.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -58,8 +62,7 @@ public class EmployeeMenuPage extends JFrame {
 				new EmployeeUserRecordPage();
 			}
 			});
-		
-		btnUserRecords.setBounds(68, 101, 124, 63);
+		btnUserRecords.setBounds(100, 101, 200, 63);
 		contentPane.add(btnUserRecords);
 		
 		JButton btnNewEmployee = new JButton("New Employee");
@@ -70,9 +73,30 @@ public class EmployeeMenuPage extends JFrame {
 				new NewEmployeePage();
 			}
 			});
-		btnNewEmployee.setBounds(237, 101, 124, 63);
+		btnNewEmployee.setBounds(340, 101, 124, 63);
 		contentPane.add(btnNewEmployee);
 		
+		//archive fields
+		JButton btnArchive = new JButton("Archive Users");
+		btnArchive.addMouseListener(new MouseAdapter(){
+			@Override
+			public void mouseClicked(MouseEvent arg0){
+				//will uncomment when function is added
+				DatabaseManager dbm = new DatabaseManager();
+				try {
+					dbm.archive();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				JOptionPane.showMessageDialog(new JFrame(), "All users archived as of " + new Date(System.currentTimeMillis()));
+				setVisible(true);
+			}
+		});
+		btnArchive.setBounds(120, 399, 124, 63);
+		contentPane.add(btnArchive);
+		
+		//logout fields
 		JButton btnLogOut = new JButton("< Log Out");
 		btnLogOut.addMouseListener(new MouseAdapter() {
 			@Override
@@ -84,8 +108,9 @@ public class EmployeeMenuPage extends JFrame {
 		btnLogOut.setBounds(10, 11, 89, 23);
 		contentPane.add(btnLogOut);
 		
+		
+		
 		//show page
 		setVisible(true);
 	}
-
 }

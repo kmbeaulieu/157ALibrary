@@ -26,6 +26,17 @@ public class User
 		this.dob = birthday;
 	}
 
+	/** this is used for the find users not in employee function in database manager
+	 * 
+	 * @param uid2 
+	 * @param name2
+	 */
+	public User(int uid2, String name2) {
+		// TODO Auto-generated constructor stub
+		this.uid = uid2;
+		this.name = name2;
+	}
+
 	public int getUid() {
 		return uid;
 	}
@@ -72,6 +83,12 @@ public class User
 
 	public void setFees(double fees) {
 		this.fees = fees;
+	}
+
+	@Override
+	public String toString() {
+		return "User [uid=" + uid + ", name=" + name + ", isEmployee=" + isEmployee + ", borrowed=" + borrowed
+				+ ", dob=" + dob + ", fees=" + fees + "]";
 	}
 	
 
