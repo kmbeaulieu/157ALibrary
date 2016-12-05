@@ -5,7 +5,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.JButton;
 
 public class UserProfilePage extends JFrame {
@@ -77,14 +81,35 @@ public class UserProfilePage extends JFrame {
 		contentPane.add(borrowedBooksLabel);
 		
 		JButton btnBack = new JButton("<");
+		btnBack.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				UserLoginPage main = new UserLoginPage();
+				main.setVisible(true);
+			}
+		});
 		btnBack.setBounds(10, 9, 46, 23);
 		contentPane.add(btnBack);
 		
 		JButton btnPayNow = new JButton("Pay Now");
+		btnPayNow.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				UserPaymentPage main = new UserPaymentPage();
+				main.setVisible(true);
+			}
+		});
 		btnPayNow.setBounds(289, 146, 89, 23);
 		contentPane.add(btnPayNow);
 		
 		JButton btnMoreInfo = new JButton("More Info");
+		btnMoreInfo.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				UserBorrowedPage main = new UserBorrowedPage();
+				main.setVisible(true);
+			}
+		});
 		btnMoreInfo.setBounds(289, 195, 89, 23);
 		contentPane.add(btnMoreInfo);
 	}

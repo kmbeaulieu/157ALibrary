@@ -5,7 +5,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
@@ -46,27 +50,34 @@ public class NewEmployeePage extends JFrame {
 		
 		JLabel lblCreateANew = new JLabel("Create A New Employee");
 		lblCreateANew.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblCreateANew.setBounds(128, 11, 178, 28);
+		lblCreateANew.setBounds(128, 11, 200, 28);
 		contentPane.add(lblCreateANew);
 		
 		JButton btnBack = new JButton("<");
+		btnBack.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				EmployeeMenuPage frame = new EmployeeMenuPage();
+				frame.setVisible(true);	
+			}
+			});
 		btnBack.setBounds(10, 11, 46, 23);
 		contentPane.add(btnBack);
 		
 		JLabel lblName = new JLabel("Name:");
-		lblName.setBounds(122, 74, 31, 14);
+		lblName.setBounds(122, 74, 50, 14);
 		contentPane.add(lblName);
 		
 		JLabel lblBirthday = new JLabel("Birthday:");
-		lblBirthday.setBounds(107, 102, 46, 14);
+		lblBirthday.setBounds(107, 102, 80, 14);
 		contentPane.add(lblBirthday);
 		
 		JLabel lblPin = new JLabel("PIN:");
-		lblPin.setBounds(132, 130, 21, 14);
+		lblPin.setBounds(132, 130, 40, 14);
 		contentPane.add(lblPin);
 		
 		JLabel lblDepartment = new JLabel("Department:");
-		lblDepartment.setBounds(92, 161, 61, 14);
+		lblDepartment.setBounds(82, 161, 100, 14);
 		contentPane.add(lblDepartment);
 		
 		nameTextfield = new JTextField();

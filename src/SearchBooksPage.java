@@ -16,6 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 
@@ -26,6 +27,8 @@ public class SearchBooksPage extends JFrame {
 	private JPanel contentPane;
 	private JTextField searchTextfield;
 	private String bookToSearch;
+	private DBDemo con = new DBDemo();
+	private User user;
 
 	/**
 	 * Launch the application.
@@ -36,8 +39,8 @@ public class SearchBooksPage extends JFrame {
 			public void run() 
 			{
 				try {
-					SearchBooksPage frame = new SearchBooksPage();
-					frame.setVisible(true);
+					//SearchBooksPage frame = new SearchBooksPage();
+					//frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -73,6 +76,25 @@ public class SearchBooksPage extends JFrame {
 		searchBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				
+					 bookToSearch = searchTextfield.getText();
+					 ArrayList<Book> books = con.searchBookTitle(bookToSearch);
+					 String[] columnNames = {"BookID", "Title", "Author", "Copies", "LocationID"};
+					 for(int i = 0; i < books.size(); i++)
+					 {
+						 
+						// System.out.format("%s,%s,%s,%s,%s", books.get(i).getBookId(),  books.get(i).getTitle()
+							//	 ,  books.get(i).getAuthor(),  books.get(i).getCopies(),  books.get(i).getLocationId());
+						 
+					 }
+				}
+					 
+					 
+				
+				
+				
+				
+				/*
 				DBDemo con = new DBDemo();
 				try {
 					 bookToSearch = searchTextfield.getText();
@@ -110,13 +132,25 @@ public class SearchBooksPage extends JFrame {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				*/
 				
-		}
+		
+		
 		});
 		
 		
 		
-		
+		JButton selectButton = new JButton("select");
+		selectButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				BookDetailsPage main = new BookDetailsPage();
+				main.setVisible(true);
+			}
+		});
+		selectButton.setBounds(100, 200, 80, 25);
+		contentPane.add(selectButton);
+	
 		
 		
 		JButton btnBack = new JButton("<");
@@ -129,6 +163,7 @@ public class SearchBooksPage extends JFrame {
 		});
 		btnBack.setBounds(10, 11, 46, 23);
 		contentPane.add(btnBack);
+		
 	}
 
 }

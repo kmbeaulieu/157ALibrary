@@ -5,7 +5,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
@@ -67,6 +71,13 @@ public class UserPaymentPage extends JFrame {
 		contentPane.add(paymentAmountTextfield);
 		
 		JButton button = new JButton("<");
+		button.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			UserProfilePage main = new UserProfilePage();
+			main.setVisible(true);
+		}
+	});
 		button.setBounds(10, 11, 46, 23);
 		contentPane.add(button);
 	}

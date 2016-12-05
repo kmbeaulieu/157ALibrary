@@ -5,7 +5,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.JButton;
 
 public class EmployeeUserRecordPage extends JFrame {
@@ -45,6 +49,13 @@ public class EmployeeUserRecordPage extends JFrame {
 		contentPane.add(lblUserRecords);
 		
 		JButton btnBack = new JButton("<");
+		btnBack.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				EmployeeMenuPage frame = new EmployeeMenuPage();
+				frame.setVisible(true);	
+			}
+			});
 		btnBack.setBounds(10, 11, 46, 23);
 		contentPane.add(btnBack);
 	}
