@@ -8,59 +8,32 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Properties;
 
-/**
- * This class demonstrates how to connect to MySQL and run some basic commands.
- * 
- * In order to use this, you have to download the Connector/J driver and add its
- * .jar file to your build path. You can find it here:
- * 
- * http://dev.mysql.com/downloads/connector/j/
- * 
- * You will see the following exception if it's not in your class path:
- * 
- * java.sql.SQLException: No suitable driver found for
- * jdbc:mysql://localhost:3306/
- * 
- * To add it to your class path: 1. Right click on your project 2. Go to Build
- * Path -> Add External Archives... 3. Select the file
- * mysql-connector-java-5.1.24-bin.jar NOTE: If you have a different version of
- * the .jar file, the name may be a little different.
- * 
- * The user name and password are both "root", which should be correct if you
- * followed the advice in the MySQL tutorial. If you want to use different
- * credentials, you can change them below.
- * 
- * You will get the following exception if the credentials are wrong:
- * 
- * java.sql.SQLException: Access denied for user 'userName'@'localhost' (using
- * password: YES)
- * 
- * You will instead get the following exception if MySQL isn't installed, isn't
- * running, or if your serverName or portNumber are wrong:
- * 
- * java.net.ConnectException: Connection refused
- */
-public class DBDemo {
+import javax.swing.JFrame;
 
-	/** The name of the MySQL account to use (or empty for anonymous) */
+/**
+ * This is the Database Java file. In it are all database related functions. (connect/disconnect/queries)
+ */
+public class DatabaseManager {
+
+	/** The name of the MySQL account */
 	private final String userName = "root";
 
-	/** The password for the MySQL account (or empty for anonymous) */
-	private final String password = "fion1994";
+	/** The password for the MySQL account*/
+	private final String password = "root";
 
 	/** The name of the computer running MySQL */
-	private final String serverName = "127.0.0.1";
+	private final String serverName = "localhost";
 
 	/** The port of the MySQL server (default is 3306) */
-	private final int portNumber = 3307;
+	private final int portNumber = 3306;
 
 	/**
-	 * The name of the database we are testing with (this default is installed
-	 * with MySQL)
+	 * The name of the database we are using is libraryProject.
 	 */
 	private final String dbName = "libraryProject";
 
@@ -73,12 +46,12 @@ public class DBDemo {
 	private final String archiveTableName = "ARCHIVE";
 
 	/**
-	 * Get a new database connection
+	 * Get a new database connection. Only used by the database manager.
 	 * 
-	 * @return
+	 * @return connection to the database.
 	 * @throws SQLException
 	 */
-	public Connection getConnection() throws SQLException {
+	private Connection getConnection() throws SQLException {
 		Connection conn = null;
 		Properties connectionProps = new Properties();
 		connectionProps.put("user", this.userName);
@@ -86,18 +59,6 @@ public class DBDemo {
 		conn = DriverManager.getConnection(
 				"jdbc:mysql://" + this.serverName + ":" + this.portNumber + "/" + this.dbName, connectionProps);
 		return conn;
-	}
-
-	/**
-	 * Closes connection to database
-	 */
-	public void disconnect() {
-		Connection conn = null;
-		try {
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 
 	/**
@@ -122,46 +83,10 @@ public class DBDemo {
 		}
 	}
 
-	/**
-	 * Connect to MySQL and get all users!
-	 * 
-	 * @throws SQLException
-	 */
-	public void run() throws SQLException {
-
-		// Connect to MySQL
-		Connection conn = null;
-		try {
-			conn = this.getConnection();
-			System.out.println("Connected to database");
-		} catch (SQLException e) {
-			System.out.println("ERROR: Could not connect to the database");
-			e.printStackTrace();
-			return;
-		}
-
-		String testQuery = "SELECT * FROM user";
-		Statement ts = conn.createStatement();
-		ResultSet rs = ts.executeQuery(testQuery);
-		while (rs.next()) {
-			int uid = rs.getInt("uid");
-			String name = rs.getString("name");
-			int isEmployee = rs.getInt("isEmployee");
-			int borrowed = rs.getInt("borrowed");
-			Date birthday = rs.getDate("birthday");
-			Double fees = rs.getDouble("fees");
-			Timestamp updatedOn = rs.getTimestamp("updatedOn");
-
-			System.out.format("%s,%s,%s,%s,%td,%s,%s%n", uid, name, isEmployee, borrowed, birthday, fees,
-					updatedOn.toString());
-		}
-		ts.close();
-	}
-
 	/* ------------- USER METHODS --------------- */
 
 	// Creating a new user in user table
-	private void insertUser(String name, Date birthday) {
+	public void insertUser(String name, Date birthday) {
 		Connection conn = null;
 		try {
 			conn = this.getConnection();
@@ -175,17 +100,23 @@ public class DBDemo {
 					.prepareStatement("INSERT INTO user (name, birthday) VALUES (?, ?)");
 			preparedStatement.setString(1, name);
 			preparedStatement.setDate(2, birthday);
-
 			preparedStatement.execute();
 			preparedStatement.close();
 		} catch (SQLException e) {
 			System.out.println("UNABLE TO INSERT USER");
 			e.printStackTrace();
+			
 		}
 	}
 
-	// --- NEED TO CHANGE FROM VOID TO RETURN USER OBJECT!
-	public void selectUser(String name, Date birthday) {
+	/**
+	 * Find user by name and birthday 
+	 * @param name
+	 * @param birthday in yyyy-mm-dd format
+	 * @return the user it found.
+	 */
+	public User selectUserDob(String name, Date birthday) {
+		User user = null;
 		Connection conn = null;
 		try {
 			conn = this.getConnection();
@@ -206,12 +137,54 @@ public class DBDemo {
 				Date userBirthday = rs.getDate("birthday");
 				int userBorrowed = rs.getInt("borrowed");
 				double userFees = rs.getDouble("fees");
+				user = new User(uID, userName, 0, userBorrowed, userBirthday, userFees);// 0 for isEmployee
 			}
+			
 			preparedStatement.close();
 		} catch (SQLException e) {
 			System.out.println("UNABLE TO SELECT USER");
 			e.printStackTrace();
 		}
+		return user;
+	}
+	
+	/**
+	 * Find the user by name and id. For logging in purposes
+	 * @param name user's name
+	 * @param pin user's uID
+	 * @return the user it found
+	 */
+	public User selectUser(String name, int pin) {
+		User user = null;
+		Connection conn = null;
+		try {
+			conn = this.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		try {
+			PreparedStatement preparedStatement = conn.prepareStatement(
+					"SELECT uID, name, birthday, borrowed, fees FROM user WHERE name = ? AND uID = ?");
+			preparedStatement.setString(1, name);
+			preparedStatement.setInt(2, pin);
+			ResultSet rs = preparedStatement.executeQuery();
+			if (rs.next()) {
+				int uID = rs.getInt("uID");
+				String userName = rs.getString("name");
+				Date userBirthday = rs.getDate("birthday");
+				int userBorrowed = rs.getInt("borrowed");
+				double userFees = rs.getDouble("fees");
+				user = new User(uID, userName, 0, userBorrowed, userBirthday, userFees);// 0 for isEmployee
+			}
+			
+			preparedStatement.close();
+		} catch (SQLException e) {
+			System.out.println("UNABLE TO SELECT USER");
+			e.printStackTrace();
+		}
+		return user;
 	}
 
 	// Update user's name in user table
@@ -236,6 +209,36 @@ public class DBDemo {
 		}
 	}
 
+	/**
+	 * This will take the payment, subtract from what is due, and give back the remaining fees.
+	 * @param uID who is paying
+	 * @param payment amount to be paid
+	 * @return resulting fee total
+	 * @throws SQLException
+	 */
+	public Double payFees(int uID, Double payment) throws SQLException{
+		Connection conn = getConnection();
+		PreparedStatement ps = conn.prepareStatement("SELECT fees FROM USER WHERE uID = ?");
+		ps.setInt(1, uID);
+		ResultSet rs = ps.executeQuery();
+		//there is only 1 value for 1 user so we can use rs.next();
+		Double currentFees=0.0;
+		while(rs.next()){
+			currentFees = rs.getDouble(1);
+		}
+		//do the fees math
+		currentFees = currentFees-payment;
+		
+		//NOW we can update database with new fees owed 
+		String statementString = ("UPDATE USER SET fees = " + currentFees + " WHERE uID = " + uID);
+		Statement s = conn.createStatement();
+		s.executeUpdate(statementString);
+		s.close();
+		
+		//this is for the GUI to show the page how much is owed. 
+		return currentFees;
+		
+	}
 	// Delete user from user table
 	public void deleteUser(int uID) {
 		Connection conn = null;
@@ -260,7 +263,7 @@ public class DBDemo {
 	/* ------------- LOAN METHODS --------------- */
 
 	// Inserting a new loan into loan table
-	public void insertLoan(int uID, int bookID, Date checkoutDate, Date dueDate, int overdue) {
+	public boolean insertLoan(int uID, int bookID, Date checkoutDate, Date dueDate, int overdue) {
 		Connection conn = null;
 		try {
 			conn = this.getConnection();
@@ -277,24 +280,29 @@ public class DBDemo {
 		// Get the due date
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.setTime(utilDate);
-		gc.add(Calendar.YEAR, 7);
+		gc.add(Calendar.DATE, 7);
 		java.sql.Date sqlDueDate = new java.sql.Date(gc.getTime().getTime());
-
+		
+		
 		try {
 			PreparedStatement preparedStatement = conn.prepareStatement(
 					"INSERT INTO loan (uID, bookID, checkoutDate, dueDate, overdue) VALUES (?, ?, ?, ?, ?)");
 			preparedStatement.setInt(1, uID);
 			preparedStatement.setInt(2, bookID);
 			preparedStatement.setDate(3, checkoutDate);
-			preparedStatement.setDate(4, dueDate);
+			preparedStatement.setDate(4, sqlDueDate);
 			preparedStatement.setInt(5, overdue);
 
 			preparedStatement.execute();
 			preparedStatement.close();
+			return true;
 		} catch (SQLException e) {
 			System.out.println("UNABLE TO INSERT LOAN");
 			e.printStackTrace();
 		}
+		return false;
+		
+		
 	}
 
 	// --- NEED TO CHANGE FROM VOID TO RETURN USER OBJECT!
@@ -406,7 +414,8 @@ public class DBDemo {
 	}
 
 	// ---------- NEED TO CHANGE FROM VOID TO RETURN BOOK OBJECT
-	public void selectBook(int bookID) {
+	public Book selectBook(int bookID) {
+		Book book = null;
 		Connection conn = null;
 		try {
 			conn = this.getConnection();
@@ -426,12 +435,14 @@ public class DBDemo {
 				String author = rs.getString("author");
 				int copies = rs.getInt("copies");
 				int locationID = rs.getInt("locationID");
+				book = new Book(bID, title, author, copies, locationID);
 			}
 			preparedStatement.close();
 		} catch (SQLException e) {
 			System.out.println("UNABLE TO SELECT BOOK");
 			e.printStackTrace();
 		}
+		return book;
 
 	}
 
@@ -484,7 +495,9 @@ public class DBDemo {
 	}
 
 	// Search book using title
-	public void searchBookTitle(String title) {
+	public ArrayList<Book> searchBookTitle(String title) {
+		ArrayList<Book> books = new ArrayList<Book>();
+		
 		Connection conn = null;
 		try {
 			conn = this.getConnection();
@@ -494,22 +507,37 @@ public class DBDemo {
 		}
 
 		try {
-			PreparedStatement preparedStatement = conn
-					.prepareStatement("SELECT bookID, title, author, copies, locationID FROM book WHERE bookID = ?");
-			preparedStatement.setString(1, title);
+			PreparedStatement preparedStatement = null;
+			if(title.isEmpty())
+			{
+			
+				 preparedStatement = conn
+						.prepareStatement("SELECT bookID, title, author, copies, locationID FROM book");
+				
+			}
+			else
+			{
+				preparedStatement = conn
+					.prepareStatement("SELECT bookID, title, author, copies, locationID FROM book WHERE title = ?");
+				preparedStatement.setString(1, title);
+			}
 			ResultSet rs = preparedStatement.executeQuery();
-			if (rs.next()) {
+			while(rs.next()) {
 				int bookID = rs.getInt("bookID");
 				String bookTitle = rs.getString("title");
 				String bookAuthor = rs.getString("author");
 				int copies = rs.getInt("copies");
 				int locationID = rs.getInt("locationID");
+				Book book = new Book(bookID, bookTitle, bookAuthor, copies, locationID);
+				books.add(book);
+				
 			}
 			preparedStatement.close();
 		} catch (SQLException e) {
 			System.out.println("UNABLE TO SELECT BOOK");
 			e.printStackTrace();
 		}
+		return books;
 	}
 
 	/* ------------- EMPLOYEE METHODS --------------- */
@@ -524,14 +552,14 @@ public class DBDemo {
 			e1.printStackTrace();
 		}
 
-		// Get the current date
-		java.util.Date utilDate = new java.util.Date();
-		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-		joinDate = sqlDate;
+//		// Get the current date
+//		java.util.Date utilDate = new java.util.Date();
+//		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+//		joinDate = sqlDate;
 
 		try {
 			PreparedStatement preparedStatement = conn.prepareStatement(
-					"INSERT INTO employee (uID, department, name, joinDate, employeePIN) VALUES (?, ?, ?, ?)");
+					"INSERT INTO employee (uID, department, name, joinDate, employeePIN) VALUES (?, ?, ?, ?, ?)");
 			preparedStatement.setInt(1, uID);
 			preparedStatement.setString(2, department);
 			preparedStatement.setString(3, name);
@@ -675,7 +703,8 @@ public class DBDemo {
 	
 	// ---------- NEED TO CHANGE FROM VOID TO RETURN LOCATION OBJECT!
 	// Get location info
-	public void selectLocation(int bookID) {
+	public Location selectLocation(int locationID) {
+		Location location = null;
 		Connection conn = null;
 		try {
 			conn = this.getConnection();
@@ -686,19 +715,22 @@ public class DBDemo {
 
 		try {
 			PreparedStatement preparedStatement = conn
-					.prepareStatement("SELECT locationID, shelfID, rowNumber FROM location WHERE bookID = ?");
-			preparedStatement.setInt(1, bookID);
+					.prepareStatement("SELECT locationID, shelfID, rowNumber FROM location WHERE locationID = ?");
+			preparedStatement.setInt(1, locationID);
 			ResultSet rs = preparedStatement.executeQuery();
 			if (rs.next()) {
-				int locationID = rs.getInt("locationID");
+				int locID = rs.getInt("locationID");
 				int shelfID = rs.getInt("shelfID");
 				int rowNumber = rs.getInt("rowNumber");
+				location = new Location(locID, shelfID,rowNumber);
 			}
 			preparedStatement.close();
 		} catch (SQLException e) {
 			System.out.println("UNABLE TO SELECT LOCATION");
 			e.printStackTrace();
 		}
+		
+		return location;
 	}
 
 	/**
@@ -706,7 +738,7 @@ public class DBDemo {
 	 * stuff
 	 */
 	public static void main(String[] args) {
-		Homepage hp = new Homepage();
+		MainMenuPage hp = new MainMenuPage();
 		hp.setVisible(true);
 
 	}
