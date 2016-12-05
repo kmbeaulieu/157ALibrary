@@ -434,7 +434,11 @@ public class DatabaseManager {
 		}
 	}
 
-	// ---------- NEED TO CHANGE FROM VOID TO RETURN BOOK OBJECT
+	/**
+	 * Select a book by its id
+	 * @param bookID
+	 * @return the book
+	 */
 	public Book selectBook(int bookID) {
 		Book book = null;
 		Connection conn = null;
@@ -561,6 +565,28 @@ public class DatabaseManager {
 		return books;
 	}
 
+	/**
+	 * This returns the books title/author along with how many copies of that book are loaned out currently.
+	 * This satisfies the groupby requirement. 
+	 * @return
+	 * @throws SQLException
+	 */
+	public ArrayList<Book> howManyBooksBorrowed() throws SQLException{
+		Connection conn = getConnection();
+		PreparedStatement ps = conn.prepareStatement("select title, author, count(bookID) as booksLoaned from (select * from Book join Loan using(bookID)) as A group by title");
+		ResultSet rs = 	ps.executeQuery();
+		ArrayList<Book> books = new ArrayList<Book>();
+		while(rs.next()){
+			String title = rs.getString(1);
+			String author = rs.getString(2);
+			Integer count = rs.getInt(3);
+			books.add(new Book(title,author,count));
+		}
+		ps.close();
+		return books;
+	}
+	
+	
 	/* ------------- EMPLOYEE METHODS --------------- */
 
 	// Creating a new user in user table

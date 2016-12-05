@@ -54,7 +54,7 @@ public class EmployeeMenuPage extends JFrame {
 		lblEmployeePortal.setBounds(145, 22, 140, 28);
 		contentPane.add(lblEmployeePortal);
 		
-		JButton btnUserRecords = new JButton("Non-Employee User Records");
+		JButton btnUserRecords = new JButton("Records");
 		btnUserRecords.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
