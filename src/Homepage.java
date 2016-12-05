@@ -7,15 +7,18 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 
+
+/*
+ * THIS PAGE IS DEPRECIATED. USE ONLY FOR TESTS.
+ */
 public class Homepage extends JFrame {
 
 	/**
 	 * This is the default serialversionuid.
 	 */
 	private static final long serialVersionUID = 1L;
-
 	private JPanel m_contentPane;
-	
+
 	public Homepage(){
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100,100,303,189);

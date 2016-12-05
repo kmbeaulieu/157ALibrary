@@ -32,13 +32,14 @@ public class EmployeeUserRecordPage extends JFrame {
 	 * Create the frame.
 	 */
 	public EmployeeUserRecordPage() {
+		//setup frame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+		//setup contents
 		JLabel lblUserRecords = new JLabel("User Records");
 		lblUserRecords.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblUserRecords.setBounds(156, 11, 105, 28);
@@ -47,6 +48,8 @@ public class EmployeeUserRecordPage extends JFrame {
 		JButton btnBack = new JButton("<");
 		btnBack.setBounds(10, 11, 46, 23);
 		contentPane.add(btnBack);
+		
+		setVisible(true);
 	}
 
 }

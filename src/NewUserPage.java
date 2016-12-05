@@ -139,12 +139,19 @@ public class NewUserPage extends JFrame {
 		backButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				MainMenuPage main = new MainMenuPage();
-				main.setVisible(true);
+				dispose();
+				new MainMenuPage();
 			}
 		});
+		/*The pack method sizes the frame so that all its contents are at or above their preferred sizes. 
+		 * An alternative to pack is to establish a frame size explicitly by calling setSize or setBounds 
+		 * (which also sets the frame location). */
+		//WE ARE CURRENTLY SETTING BOUNDS SO NO NEED FOR PACK FOR NOW.
+		//pack();
+		setVisible(true);
 		
 	}
+	
 
 }
 	

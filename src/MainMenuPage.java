@@ -3,12 +3,14 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 
@@ -20,17 +22,34 @@ public class MainMenuPage extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainMenuPage frame = new MainMenuPage();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+		/*
+		 * All things I have seen have used swing utilities instead of event queue. 
+		 */
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					MainMenuPage frame = new MainMenuPage();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+		 SwingUtilities.invokeLater(new Runnable(){
+
+	            @Override
+	            public void run()
+	            {
+	            	//set up DB. Might not need this since each class will handle the DB functions.
+	            	DBDemo db = new DBDemo();
+	            	
+	            	//Set up page
+	                new MainMenuPage().setVisible(true);
+	            }
+
+	        });
+	    }
+	
 
 	/**
 	 * Create the frame.
@@ -54,8 +73,9 @@ public class MainMenuPage extends JFrame {
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				NewUserPage frame = new NewUserPage();
-				frame.setVisible(true);	
+				dispose();
+				new NewUserPage();
+				
 			}
 			});
 		
@@ -71,12 +91,15 @@ public class MainMenuPage extends JFrame {
 		btnSearchBooks.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				SearchBooksPage frame = new SearchBooksPage();
-				frame.setVisible(true);	
+				dispose();
+				new SearchBooksPage();
+//				SearchBooksPage frame = new SearchBooksPage();
+//				frame.setVisible(true);	
 			}
 			});
 		btnSearchBooks.setBounds(79, 157, 124, 63);
 		contentPane.add(btnSearchBooks);
+		setVisible(true);
 		
 	}
 
