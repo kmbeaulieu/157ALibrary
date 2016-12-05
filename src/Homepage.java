@@ -21,7 +21,7 @@ public class Homepage extends JFrame {
 
 	public Homepage(){
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100,100,303,189);
+		setBounds(100, 100, 800, 600);
 		m_contentPane = new JPanel();
 		m_contentPane.setLayout(null);
 		setContentPane(m_contentPane);

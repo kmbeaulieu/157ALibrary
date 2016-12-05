@@ -56,7 +56,7 @@ public class MainMenuPage extends JFrame {
 	 */
 	public MainMenuPage() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -68,7 +68,7 @@ public class MainMenuPage extends JFrame {
 		contentPane.add(lblWelcomeToApple);
 		
 		JButton btnNewButton = new JButton("New User");
-		btnNewButton.setBounds(79, 83, 124, 63);
+		btnNewButton.setBounds(79, 83, 140, 63);
 		contentPane.add(btnNewButton);
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -87,7 +87,7 @@ public class MainMenuPage extends JFrame {
 				new UserLoginPage();
 			}
 			});
-		btnUserLogin.setBounds(240, 83, 124, 63);
+		btnUserLogin.setBounds(240, 83, 140, 63);
 		contentPane.add(btnUserLogin);
 		
 		
@@ -100,7 +100,7 @@ public class MainMenuPage extends JFrame {
 				new EmployeeLoginPage();
 			}
 			});
-		btnNewButton_1.setBounds(240, 157, 130, 63);
+		btnNewButton_1.setBounds(240, 157, 140, 63);
 		contentPane.add(btnNewButton_1);
 		
 		
@@ -112,7 +112,7 @@ public class MainMenuPage extends JFrame {
 				new SearchBooksPage();
 			}
 			});
-		btnSearchBooks.setBounds(79, 157, 124, 63);
+		btnSearchBooks.setBounds(79, 157, 140, 63);
 		contentPane.add(btnSearchBooks);
 		setVisible(true);
 		

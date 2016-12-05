@@ -41,7 +41,7 @@ public class EmployeeLoginPage extends JFrame {
 	public EmployeeLoginPage() {
 		//set up frame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -57,8 +57,8 @@ public class EmployeeLoginPage extends JFrame {
 		btnBack.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-			MainMenuPage frame = new MainMenuPage();
-				frame.setVisible(true);	
+				dispose();
+				new MainMenuPage();	
 			}
 			});
 		btnBack.setBounds(10, 11, 46, 23);
