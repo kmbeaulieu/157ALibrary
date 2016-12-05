@@ -138,8 +138,8 @@ public class SearchBooksPage extends JFrame {
 		selectButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				BookDetailsPage main = new BookDetailsPage();
-				main.setVisible(true);
+				dispose();
+				new BookDetailsPage();
 			}
 		});
 		selectButton.setBounds(100, 200, 80, 25);

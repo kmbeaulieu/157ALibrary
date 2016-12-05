@@ -74,8 +74,9 @@ public class UserLoginPage extends JFrame {
 		btnEnter.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				UserProfilePage frame = new UserProfilePage();
-				frame.setVisible(true);	
+				dispose();
+				new UserProfilePage();
+				
 			}
 			});
 		btnEnter.setBounds(169, 177, 89, 23);
@@ -85,8 +86,8 @@ public class UserLoginPage extends JFrame {
 		btnBack.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				MainMenuPage frame = new MainMenuPage();
-				frame.setVisible(true);	
+				dispose();
+				new MainMenuPage();
 			}
 			});
 		btnBack.setBounds(10, 11, 46, 23);

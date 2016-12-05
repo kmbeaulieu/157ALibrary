@@ -86,8 +86,8 @@ public class EmployeeLoginPage extends JFrame {
 		btnEnter.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				EmployeeMenuPage frame = new EmployeeMenuPage();
-				frame.setVisible(true);	
+				dispose();
+				new EmployeeMenuPage();
 			}
 			});
 		btnEnter.setBounds(177, 178, 89, 23);

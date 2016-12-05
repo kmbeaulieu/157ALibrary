@@ -59,8 +59,8 @@ public class NewEmployeePage extends JFrame {
 		btnBack.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				EmployeeMenuPage frame = new EmployeeMenuPage();
-				frame.setVisible(true);	
+				dispose();
+				new EmployeeMenuPage();
 			}
 			});
 		btnBack.setBounds(10, 11, 46, 23);

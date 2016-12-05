@@ -75,8 +75,8 @@ public class UserPaymentPage extends JFrame {
 		button.addMouseListener(new MouseAdapter() {
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
-			UserProfilePage main = new UserProfilePage();
-			main.setVisible(true);
+			dispose();
+			new UserProfilePage();
 		}
 	});
 		button.setBounds(10, 11, 46, 23);

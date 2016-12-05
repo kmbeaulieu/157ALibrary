@@ -83,8 +83,8 @@ public class MainMenuPage extends JFrame {
 		btnUserLogin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				UserLoginPage	 frame = new UserLoginPage();
-				frame.setVisible(true);	
+				dispose();
+				new UserLoginPage();
 			}
 			});
 		btnUserLogin.setBounds(240, 83, 124, 63);
@@ -96,8 +96,8 @@ public class MainMenuPage extends JFrame {
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				EmployeeLoginPage frame = new EmployeeLoginPage();
-				frame.setVisible(true);	
+				dispose();
+				new EmployeeLoginPage();
 			}
 			});
 		btnNewButton_1.setBounds(240, 157, 130, 63);
@@ -110,8 +110,6 @@ public class MainMenuPage extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				dispose();
 				new SearchBooksPage();
-//				SearchBooksPage frame = new SearchBooksPage();
-//				frame.setVisible(true);	
 			}
 			});
 		btnSearchBooks.setBounds(79, 157, 124, 63);

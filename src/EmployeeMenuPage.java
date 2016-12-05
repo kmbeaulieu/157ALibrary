@@ -54,8 +54,8 @@ public class EmployeeMenuPage extends JFrame {
 		btnUserRecords.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				EmployeeUserRecordPage frame = new EmployeeUserRecordPage();
-				frame.setVisible(true);	
+				dispose();
+				new EmployeeUserRecordPage();
 			}
 			});
 		
@@ -66,8 +66,8 @@ public class EmployeeMenuPage extends JFrame {
 		btnNewEmployee.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				NewEmployeePage frame = new NewEmployeePage();
-				frame.setVisible(true);	
+				dispose();
+				new NewEmployeePage();
 			}
 			});
 		btnNewEmployee.setBounds(237, 101, 124, 63);
@@ -77,6 +77,7 @@ public class EmployeeMenuPage extends JFrame {
 		btnLogOut.setBounds(10, 11, 89, 23);
 		contentPane.add(btnLogOut);
 		
+		//show page
 		setVisible(true);
 	}
 

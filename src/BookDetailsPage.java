@@ -36,6 +36,7 @@ public class BookDetailsPage extends JFrame {
 	 * Create the frame.
 	 */
 	public BookDetailsPage() {
+		//create frame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -43,6 +44,7 @@ public class BookDetailsPage extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		//create content
 		JLabel lblBookDetails = new JLabel("Book Details");
 		lblBookDetails.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblBookDetails.setBounds(167, 11, 94, 28);
@@ -107,6 +109,7 @@ public class BookDetailsPage extends JFrame {
 		btnBack.setBounds(10, 11, 46, 23);
 		contentPane.add(btnBack);
 		
+		//show frame
 		setVisible(true);
 	}
 

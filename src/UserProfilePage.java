@@ -86,8 +86,8 @@ public class UserProfilePage extends JFrame {
 		btnBack.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				UserLoginPage main = new UserLoginPage();
-				main.setVisible(true);
+				dispose();
+				new UserLoginPage();
 			}
 		});
 		btnBack.setBounds(10, 9, 46, 23);
@@ -97,8 +97,8 @@ public class UserProfilePage extends JFrame {
 		btnPayNow.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				UserPaymentPage main = new UserPaymentPage();
-				main.setVisible(true);
+				dispose();
+				new UserPaymentPage();
 			}
 		});
 		btnPayNow.setBounds(289, 146, 89, 23);
@@ -108,8 +108,8 @@ public class UserProfilePage extends JFrame {
 		btnMoreInfo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				UserBorrowedPage main = new UserBorrowedPage();
-				main.setVisible(true);
+				dispose();
+				new UserBorrowedPage();
 			}
 		});
 		btnMoreInfo.setBounds(289, 195, 89, 23);
