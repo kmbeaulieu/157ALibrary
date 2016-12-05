@@ -265,7 +265,7 @@ public class DatabaseManager {
 	/* ------------- LOAN METHODS --------------- */
 
 	// Inserting a new loan into loan table
-	public void insertLoan(int uID, int bookID, Date checkoutDate, Date dueDate, int overdue) {
+	public boolean insertLoan(int uID, int bookID, Date checkoutDate, Date dueDate, int overdue) {
 		Connection conn = null;
 		try {
 			conn = this.getConnection();
@@ -282,24 +282,29 @@ public class DatabaseManager {
 		// Get the due date
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.setTime(utilDate);
-		gc.add(Calendar.YEAR, 7);
+		gc.add(Calendar.DATE, 7);
 		java.sql.Date sqlDueDate = new java.sql.Date(gc.getTime().getTime());
-
+		
+		
 		try {
 			PreparedStatement preparedStatement = conn.prepareStatement(
 					"INSERT INTO loan (uID, bookID, checkoutDate, dueDate, overdue) VALUES (?, ?, ?, ?, ?)");
 			preparedStatement.setInt(1, uID);
 			preparedStatement.setInt(2, bookID);
 			preparedStatement.setDate(3, checkoutDate);
-			preparedStatement.setDate(4, dueDate);
+			preparedStatement.setDate(4, sqlDueDate);
 			preparedStatement.setInt(5, overdue);
 
 			preparedStatement.execute();
 			preparedStatement.close();
+			return true;
 		} catch (SQLException e) {
 			System.out.println("UNABLE TO INSERT LOAN");
 			e.printStackTrace();
 		}
+		return false;
+		
+		
 	}
 
 	// --- NEED TO CHANGE FROM VOID TO RETURN USER OBJECT!
@@ -411,7 +416,8 @@ public class DatabaseManager {
 	}
 
 	// ---------- NEED TO CHANGE FROM VOID TO RETURN BOOK OBJECT
-	public void selectBook(int bookID) {
+	public Book selectBook(int bookID) {
+		Book book = null;
 		Connection conn = null;
 		try {
 			conn = this.getConnection();
@@ -431,12 +437,14 @@ public class DatabaseManager {
 				String author = rs.getString("author");
 				int copies = rs.getInt("copies");
 				int locationID = rs.getInt("locationID");
+				book = new Book(bID, title, author, copies, locationID);
 			}
 			preparedStatement.close();
 		} catch (SQLException e) {
 			System.out.println("UNABLE TO SELECT BOOK");
 			e.printStackTrace();
 		}
+		return book;
 
 	}
 
@@ -697,7 +705,8 @@ public class DatabaseManager {
 	
 	// ---------- NEED TO CHANGE FROM VOID TO RETURN LOCATION OBJECT!
 	// Get location info
-	public void selectLocation(int bookID) {
+	public Location selectLocation(int bookID) {
+		Location location = null;
 		Connection conn = null;
 		try {
 			conn = this.getConnection();
@@ -715,12 +724,15 @@ public class DatabaseManager {
 				int locationID = rs.getInt("locationID");
 				int shelfID = rs.getInt("shelfID");
 				int rowNumber = rs.getInt("rowNumber");
+				location = new Location(locationID, shelfID,rowNumber);
 			}
 			preparedStatement.close();
 		} catch (SQLException e) {
 			System.out.println("UNABLE TO SELECT LOCATION");
 			e.printStackTrace();
 		}
+		
+		return location;
 	}
 
 	/**

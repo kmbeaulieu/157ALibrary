@@ -30,6 +30,7 @@ public class SearchBooksPage extends JFrame {
 	private String bookToSearch;
 	private DatabaseManager con = new DatabaseManager();
 	private User user;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -79,17 +80,18 @@ public class SearchBooksPage extends JFrame {
 		searchBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				System.out.println("Fd testing");
+				
 					 bookToSearch = searchTextfield.getText();
 					 ArrayList<Book> books = con.searchBookTitle(bookToSearch);
 					 String[] columnNames = {"BookID", "Title", "Author", "Copies", "LocationID"};
 					 
 					 TableTester tableCreate = new TableTester(columnNames, books);
-					 JTable table = tableCreate.draw();
+					  table = tableCreate.draw();
 					// table.setAutoResizeMode();
 					 table.setBounds(50, 100,400, 300);
 					 contentPane.add(table);
 					 contentPane.repaint();
+					
 					 
 					 for(int i = 0; i < books.size(); i++)
 					 {
@@ -147,11 +149,20 @@ public class SearchBooksPage extends JFrame {
 		selectButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				int s=  table.getSelectedRow();
+				int bookID = (int) table.getValueAt(s, 0);
+				
+				
+				
+				
+				
 				dispose();
-				new BookDetailsPage();
+				
+				new BookDetailsPage(bookID);
+				
 			}
 		});
-		selectButton.setBounds(100, 200, 80, 25);
+		selectButton.setBounds(50, 400,100, 50);
 		contentPane.add(selectButton);
 	
 		JButton btnBack = new JButton("<");
