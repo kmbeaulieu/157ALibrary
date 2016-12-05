@@ -95,6 +95,8 @@ public class BookDetailsPage extends JFrame {
 		JButton btnBack = new JButton("<");
 		btnBack.setBounds(10, 11, 46, 23);
 		contentPane.add(btnBack);
+		
+		setVisible(true);
 	}
 
 }

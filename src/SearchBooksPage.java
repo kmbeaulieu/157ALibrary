@@ -46,9 +46,10 @@ public class SearchBooksPage extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Create the frame. Adds all the things. Makes it visible.
 	 */
 	public SearchBooksPage() {
+		//setup frame bounds
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -56,6 +57,7 @@ public class SearchBooksPage extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		//set up frame contents
 		JLabel lblSearchBooks = new JLabel("Search Books");
 		lblSearchBooks.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblSearchBooks.setBounds(163, 11, 101, 28);
@@ -85,7 +87,6 @@ public class SearchBooksPage extends JFrame {
 					
 					ResultSet rs = ts.executeQuery();
 					
-					
 					while(rs.next()){
 						int uid = rs.getInt("bookID");
 						String title = rs.getString("title");
@@ -93,12 +94,7 @@ public class SearchBooksPage extends JFrame {
 						int copies = rs.getInt("copies");
 						int locID = rs.getInt("locationID");
 						System.out.format("%s,%s,%s,%s,%s", uid, title, author, copies, locID);
-						
-						
-					
-						
-						
-						
+
 						
 					}
 					ts.close();
@@ -114,21 +110,17 @@ public class SearchBooksPage extends JFrame {
 		}
 		});
 		
-		
-		
-		
-		
-		
 		JButton btnBack = new JButton("<");
 		btnBack.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				MainMenuPage main = new MainMenuPage();
-				main.setVisible(true);
+				dispose();
+				new MainMenuPage();
 			}
 		});
 		btnBack.setBounds(10, 11, 46, 23);
 		contentPane.add(btnBack);
+		setVisible(true);
 	}
 
 }

@@ -32,6 +32,7 @@ public class EmployeeMenuPage extends JFrame {
 	 * Create the frame.
 	 */
 	public EmployeeMenuPage() {
+		//set up frame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -39,6 +40,7 @@ public class EmployeeMenuPage extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		//set up contents
 		JLabel lblEmployeePortal = new JLabel("Employee Portal");
 		lblEmployeePortal.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblEmployeePortal.setBounds(145, 11, 122, 28);
@@ -55,6 +57,8 @@ public class EmployeeMenuPage extends JFrame {
 		JButton btnLogOut = new JButton("< Log Out");
 		btnLogOut.setBounds(10, 11, 89, 23);
 		contentPane.add(btnLogOut);
+		
+		setVisible(true);
 	}
 
 }

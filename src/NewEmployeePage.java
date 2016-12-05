@@ -37,6 +37,7 @@ public class NewEmployeePage extends JFrame {
 	 * Create the frame.
 	 */
 	public NewEmployeePage() {
+		//set up frame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -44,6 +45,7 @@ public class NewEmployeePage extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		//set up contents
 		JLabel lblCreateANew = new JLabel("Create A New Employee");
 		lblCreateANew.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblCreateANew.setBounds(128, 11, 178, 28);
@@ -92,6 +94,9 @@ public class NewEmployeePage extends JFrame {
 		JButton btnCreateEmployee = new JButton("Create Employee");
 		btnCreateEmployee.setBounds(166, 206, 132, 23);
 		contentPane.add(btnCreateEmployee);
+		
+		//display page
+		setVisible(true);
 	}
 
 }

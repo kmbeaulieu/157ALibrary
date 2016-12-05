@@ -32,6 +32,7 @@ public class UserProfilePage extends JFrame {
 	 * Create the frame.
 	 */
 	public UserProfilePage() {
+		//create frame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -39,6 +40,7 @@ public class UserProfilePage extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		//create content
 		JLabel lblUserProfile = new JLabel("User Profile");
 		lblUserProfile.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblUserProfile.setBounds(171, 11, 90, 28);
@@ -87,6 +89,8 @@ public class UserProfilePage extends JFrame {
 		JButton btnMoreInfo = new JButton("More Info");
 		btnMoreInfo.setBounds(289, 195, 89, 23);
 		contentPane.add(btnMoreInfo);
+		
+		setVisible(true);
 	}
 
 }

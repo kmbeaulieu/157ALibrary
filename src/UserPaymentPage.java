@@ -34,13 +34,14 @@ public class UserPaymentPage extends JFrame {
 	 * Create the frame.
 	 */
 	public UserPaymentPage() {
+		//create frame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+		//create content
 		JLabel lblUserPayment = new JLabel("User Payment");
 		lblUserPayment.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblUserPayment.setBounds(160, 11, 104, 24);
@@ -69,6 +70,8 @@ public class UserPaymentPage extends JFrame {
 		JButton button = new JButton("<");
 		button.setBounds(10, 11, 46, 23);
 		contentPane.add(button);
+		//show page
+		setVisible(true);
 	}
 
 }

@@ -35,13 +35,14 @@ public class UserLoginPage extends JFrame {
 	 * Create the frame.
 	 */
 	public UserLoginPage() {
+		//create frame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+		//create content
 		JLabel lblUserLogin = new JLabel("User Login");
 		lblUserLogin.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblUserLogin.setBounds(171, 11, 88, 28);
@@ -72,6 +73,9 @@ public class UserLoginPage extends JFrame {
 		JButton btnBack = new JButton("<");
 		btnBack.setBounds(10, 11, 46, 23);
 		contentPane.add(btnBack);
+		
+		//show page
+		setVisible(true);
 	}
 
 }

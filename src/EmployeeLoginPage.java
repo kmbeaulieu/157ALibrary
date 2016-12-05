@@ -35,6 +35,7 @@ public class EmployeeLoginPage extends JFrame {
 	 * Create the frame.
 	 */
 	public EmployeeLoginPage() {
+		//set up frame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -42,6 +43,7 @@ public class EmployeeLoginPage extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		//set up contents
 		JLabel lblEmployeeLogin = new JLabel("Employee Login");
 		lblEmployeeLogin.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblEmployeeLogin.setBounds(159, 11, 117, 28);
@@ -72,6 +74,9 @@ public class EmployeeLoginPage extends JFrame {
 		JButton btnEnter = new JButton("Enter");
 		btnEnter.setBounds(177, 178, 89, 23);
 		contentPane.add(btnEnter);
+		
+		//show page
+		setVisible(true);
 	}
 
 }

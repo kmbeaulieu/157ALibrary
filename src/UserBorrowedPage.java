@@ -33,6 +33,7 @@ public class UserBorrowedPage extends JFrame {
 	 * Create the frame.
 	 */
 	public UserBorrowedPage() {
+		//set up frame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -40,6 +41,7 @@ public class UserBorrowedPage extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		//set up contents
 		JLabel lblUserBorrowedBooks = new JLabel("User Borrowed Books");
 		lblUserBorrowedBooks.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblUserBorrowedBooks.setBounds(132, 11, 161, 28);
@@ -48,6 +50,8 @@ public class UserBorrowedPage extends JFrame {
 		JButton btnBack = new JButton("<");
 		btnBack.setBounds(10, 11, 46, 23);
 		contentPane.add(btnBack);
+		
+		setVisible(true);
 	}
 
 }
