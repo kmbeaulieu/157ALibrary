@@ -27,7 +27,7 @@ public class SearchBooksPage extends JFrame {
 	private JPanel contentPane;
 	private JTextField searchTextfield;
 	private String bookToSearch;
-	private DBDemo con = new DBDemo();
+	private DatabaseManager con = new DatabaseManager();
 	private User user;
 
 	/**
@@ -97,7 +97,7 @@ public class SearchBooksPage extends JFrame {
 				
 				
 				/*
-				DBDemo con = new DBDemo();
+				DatabaseManager con = new DatabaseManager();
 				try {
 					 bookToSearch = searchTextfield.getText();
 					Connection connection = (Connection) con.getConnection();

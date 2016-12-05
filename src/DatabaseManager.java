@@ -18,7 +18,7 @@ import javax.swing.JFrame;
 /**
  * This is the Database Java file. In it are all database related functions. (connect/disconnect/queries)
  */
-public class DBDemo {
+public class DatabaseManager {
 
 	/** The name of the MySQL account */
 	private final String userName = "root";

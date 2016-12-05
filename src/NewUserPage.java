@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.Console;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -27,7 +28,7 @@ public class NewUserPage extends JFrame {
 	private String username = "";
 	private Date dob = new Date(0, 0, 0);
 	private String dateofBirth;
-	private DBDemo con = new DBDemo();
+	private DatabaseManager dbm = new DatabaseManager();
 	private User user;
 
 
@@ -78,6 +79,8 @@ public class NewUserPage extends JFrame {
 		username = nameTextfield.getText();
 		
 		birthdayTextfield = new JTextField();
+		birthdayTextfield.setToolTipText("yyyy-mm-dd");
+		birthdayTextfield.setText("yyyy-mm-dd");
 		birthdayTextfield.setColumns(10);
 		birthdayTextfield.setBounds(165, 116, 121, 20);
 		contentPane.add(birthdayTextfield);
@@ -92,26 +95,28 @@ public class NewUserPage extends JFrame {
 				username = nameTextfield.getText();
 				
 				int year = Integer.parseInt(birthdayTextfield.getText().substring(0, 4));
+				System.out.println(year);
 				int month = Integer.parseInt(birthdayTextfield.getText().substring(5,7));
+				System.out.println(month);
 				int day = Integer.parseInt(birthdayTextfield.getText().substring(8, 10));
 				dob.setDate(day);
-				dob.setMonth(month);
-				dob.setYear(year);
-				
-				con.insertUser(username, dob);
-				User insertedUser = con.selectUser(username, dob);
+				//The month will loop back around. 13 = 0,1 so January. 
+				dob.setMonth(month-1);
+				//because Java copied C, Dates use year - 1900 or something like that. This is why there is a magic number to fix this error. 
+				dob.setYear(year-1900);
+				System.out.println(dob.toString());
+				dbm.insertUser(username, dob);
+				User insertedUser = dbm.selectUser(username, dob);
 				int UserID = insertedUser.getUid();
 				
-				JFrame f = new JFrame();
-				
-				JOptionPane.showMessageDialog(f, "Congrats. New User is created. Use the back button to browse library. Your userID is " + UserID);
-				f.setVisible(true);
+				JOptionPane.showMessageDialog(new JFrame(), "Congrats. New User is created. Use the back button to browse library. Your userID is " + UserID);
+				setVisible(true);
 				
 				
 				/*
-				DBDemo con = new DBDemo();
+				DatabaseManager dbm = new DatabaseManager();
 				try {
-					Connection connection = (Connection) con.getConnection();
+					Connection connection = (Connection) dbm.getConnection();
 					username = nameTextfield.getText();
 					dateofBirth = birthdayTextfield.getText();
 					 
@@ -172,7 +177,5 @@ public class NewUserPage extends JFrame {
 		setVisible(true);
 		
 	}
-	
-
 }
 	

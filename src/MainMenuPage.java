@@ -41,7 +41,7 @@ public class MainMenuPage extends JFrame {
 	            public void run()
 	            {
 	            	//set up DB. Might not need this since each class will handle the DB functions.
-	            	DBDemo db = new DBDemo();
+	            	DatabaseManager db = new DatabaseManager();
 	            	
 	            	//Set up page
 	                new MainMenuPage().setVisible(true);
@@ -55,13 +55,14 @@ public class MainMenuPage extends JFrame {
 	 * Create the frame.
 	 */
 	public MainMenuPage() {
+		//set up frame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+		//set up content
 		JLabel lblWelcomeToApple = new JLabel("Welcome to Apple Juice Library!");
 		lblWelcomeToApple.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblWelcomeToApple.setBounds(102, 28, 249, 28);
@@ -90,8 +91,6 @@ public class MainMenuPage extends JFrame {
 		btnUserLogin.setBounds(240, 83, 140, 63);
 		contentPane.add(btnUserLogin);
 		
-		
-		
 		JButton btnNewButton_1 = new JButton("Employee Console");
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
 			@Override
@@ -103,7 +102,6 @@ public class MainMenuPage extends JFrame {
 		btnNewButton_1.setBounds(240, 157, 140, 63);
 		contentPane.add(btnNewButton_1);
 		
-		
 		JButton btnSearchBooks = new JButton("Search Books");
 		btnSearchBooks.addMouseListener(new MouseAdapter() {
 			@Override
@@ -114,6 +112,7 @@ public class MainMenuPage extends JFrame {
 			});
 		btnSearchBooks.setBounds(79, 157, 140, 63);
 		contentPane.add(btnSearchBooks);
+		//show page
 		setVisible(true);
 		
 		
