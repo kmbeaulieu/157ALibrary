@@ -3,6 +3,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
@@ -39,8 +40,8 @@ public class SearchBooksPage extends JFrame {
 			public void run() 
 			{
 				try {
-					//SearchBooksPage frame = new SearchBooksPage();
-					//frame.setVisible(true);
+					SearchBooksPage frame = new SearchBooksPage();
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -82,6 +83,14 @@ public class SearchBooksPage extends JFrame {
 					 bookToSearch = searchTextfield.getText();
 					 ArrayList<Book> books = con.searchBookTitle(bookToSearch);
 					 String[] columnNames = {"BookID", "Title", "Author", "Copies", "LocationID"};
+					 
+					 TableTester tableCreate = new TableTester(columnNames, books);
+					 JTable table = tableCreate.draw();
+					// table.setAutoResizeMode();
+					 table.setBounds(50, 100,400, 300);
+					 contentPane.add(table);
+					 contentPane.repaint();
+					 
 					 for(int i = 0; i < books.size(); i++)
 					 {
 						 
