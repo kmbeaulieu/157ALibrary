@@ -46,12 +46,12 @@ public class DatabaseManager {
 	private final String archiveTableName = "ARCHIVE";
 
 	/**
-	 * Get a new database connection
+	 * Get a new database connection. Only used by the database manager.
 	 * 
-	 * @return
+	 * @return connection to the database.
 	 * @throws SQLException
 	 */
-	public Connection getConnection() throws SQLException {
+	private Connection getConnection() throws SQLException {
 		Connection conn = null;
 		Properties connectionProps = new Properties();
 		connectionProps.put("user", this.userName);
@@ -60,18 +60,6 @@ public class DatabaseManager {
 				"jdbc:mysql://" + this.serverName + ":" + this.portNumber + "/" + this.dbName, connectionProps);
 		return conn;
 	}
-
-//	/**
-//	 * Closes connection to database
-//	 */
-//	public void disconnect() {
-//		Connection conn.getConnection();
-//		try {
-//			conn.close();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//	}
 
 	/**
 	 * Run a SQL command which does not return a recordset:
@@ -112,7 +100,7 @@ public class DatabaseManager {
 					.prepareStatement("INSERT INTO user (name, birthday) VALUES (?, ?)");
 			preparedStatement.setString(1, name);
 			preparedStatement.setDate(2, birthday);
-
+			
 			preparedStatement.execute();
 			preparedStatement.close();
 			
@@ -223,6 +211,36 @@ public class DatabaseManager {
 		}
 	}
 
+	/**
+	 * This will take the payment, subtract from what is due, and give back the remaining fees.
+	 * @param uID who is paying
+	 * @param payment amount to be paid
+	 * @return resulting fee total
+	 * @throws SQLException
+	 */
+	public Double payFees(int uID, Double payment) throws SQLException{
+		Connection conn = getConnection();
+		PreparedStatement ps = conn.prepareStatement("SELECT fees FROM USER WHERE uID = ?");
+		ps.setInt(1, uID);
+		ResultSet rs = ps.executeQuery();
+		//there is only 1 value for 1 user so we can use rs.next();
+		Double currentFees=0.0;
+		while(rs.next()){
+			currentFees = rs.getDouble(1);
+		}
+		//do the fees math
+		currentFees = currentFees-payment;
+		
+		//NOW we can update database with new fees owed 
+		String statementString = ("UPDATE USER SET fees = " + currentFees + " WHERE uID = " + uID);
+		Statement s = conn.createStatement();
+		s.executeUpdate(statementString);
+		s.close();
+		
+		//this is for the GUI to show the page how much is owed. 
+		return currentFees;
+		
+	}
 	// Delete user from user table
 	public void deleteUser(int uID) {
 		Connection conn = null;

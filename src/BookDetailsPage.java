@@ -102,8 +102,9 @@ public class BookDetailsPage extends JFrame {
 		btnBack.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				//SearchBooksPage frame = new SearchBooksPage();
-				//frame.setVisible(true);	
+				
+				SearchBooksPage frame = new SearchBooksPage();
+				frame.setVisible(true);	
 			}
 			});
 		btnBack.setBounds(10, 11, 46, 23);

@@ -79,7 +79,7 @@ public class SearchBooksPage extends JFrame {
 		searchBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				
+				System.out.println("Fd testing");
 					 bookToSearch = searchTextfield.getText();
 					 ArrayList<Book> books = con.searchBookTitle(bookToSearch);
 					 String[] columnNames = {"BookID", "Title", "Author", "Copies", "LocationID"};

@@ -79,15 +79,10 @@ public class UserLoginPage extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				User usr = null;
-				try {
-					dbm.getConnection();
-					//get user by name/pin 
-					usr = dbm.selectUser(nameTextfield.getText(), Integer.parseInt(pinTextfield.getText()));
-					dispose();
-					new UserProfilePage(usr);
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
+				//get user by name/pin 
+				usr = dbm.selectUser(nameTextfield.getText(), Integer.parseInt(pinTextfield.getText()));
+				dispose();
+				new UserProfilePage(usr);
 				
 				
 			}
