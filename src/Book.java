@@ -9,6 +9,7 @@ public class Book
 	private String author;
 	private int copies;
 	private int locationId;
+	private int borrowed;
 
 	public Book(int bookID, String title, String author, int copies, int locationID)
 	{
@@ -20,6 +21,14 @@ public class Book
 		
 		
 		
+	}
+
+	//this is for the grouped by books. It needs the count int. Just use the copies to store this value.
+	public Book(String title2, String author2, Integer count) {
+		// TODO Auto-generated constructor stub
+		this.title =title2;
+		this.author = author2;
+		this.borrowed =count;
 	}
 
 	public int getBookId() {
@@ -60,6 +69,10 @@ public class Book
 
 	public void setLocationId(int locationId) {
 		this.locationId = locationId;
+	}
+
+	public int getBorrowed() {
+		return borrowed;
 	}
 	
 	
