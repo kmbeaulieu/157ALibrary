@@ -123,6 +123,7 @@ BEGIN
 END;//
 delimiter ;
 
+--This dummy data was put in so we could have consistancy without changing local paths. You can use these or the txt files provided. 
 --
 -- Inserting dummy data into User
 --
