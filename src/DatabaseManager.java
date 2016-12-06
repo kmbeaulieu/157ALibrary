@@ -44,6 +44,9 @@ public class DatabaseManager {
 	private final String locationTableName = "LOCATION";
 	private final String employeeTableName = "EMPLOYEE";
 	private final String archiveTableName = "ARCHIVE";
+	
+	
+	private int extendBookID;
 
 	/**
 	 * Get a new database connection. Only used by the database manager.
@@ -732,6 +735,135 @@ public class DatabaseManager {
 		
 		return location;
 	}
+	
+	/**
+	 * returns details about user's borrowed books
+	 * @param user given user
+	 * @return returns 2d object array with details 
+	 */
+	
+	public Object[][] bookBorrowed(User user)
+	{
+		Object[][] ret = new Object[10][5];
+		//ArrayList<Object> ret = new ArrayList<Object>();
+		Connection conn = null;
+		try {
+			conn = this.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		// select * from book, loan where loan.bookID in (select bookID from loan where uID = 1) and book.bookID in (select bookID from loan where uID =1)
+
+		try {
+			PreparedStatement preparedStatement = conn
+					.prepareStatement("select book.title, book.author, loan.checkoutDate, loan.dueDate,loan.overdue from book, loan where loan.bookID in (select bookID from loan where uID = ?) "
+							+ "and book.bookID in (select bookID from loan where uID =?)");
+			preparedStatement.setInt(1, user.getUid());
+			preparedStatement.setInt(2, user.getUid());
+			
+			ResultSet rs = preparedStatement.executeQuery();
+			int index = 0;
+			while (rs.next()) {
+				String title = rs.getString("title");
+				String author = rs.getString("author");
+				
+				Date checkoutDate = rs.getDate("checkoutDate");
+				Date dueDate = rs.getDate("dueDate");
+				int overdue = rs.getInt("overdue");
+				
+				ret[index][0] = title;
+				ret[index][1] = author;
+				ret[index][2] = checkoutDate;
+				ret[index][3] = dueDate;
+				ret[index][4] = overdue;
+				
+				index++;
+				
+				
+			}
+			preparedStatement.close();
+		} catch (SQLException e) {
+			System.out.println("UNABLE TO SELECT LOCATION");
+			e.printStackTrace();
+		}
+		
+		return ret;
+		
+		
+		
+	}
+	
+	/*
+	 * 
+	 * 
+	 */
+	public boolean extendDueDate(User user, String title, String author, Date due)
+	{
+		Connection conn = null;
+		java.util.Date utilDate = new java.util.Date();
+		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+		//checkoutDate = sqlDate;
+
+		// Get the due date
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(due);
+		gc.add(Calendar.DATE, 7);
+		java.sql.Date newsqlDueDate = new java.sql.Date(gc.getTime().getTime());
+		
+	//	java.sql.Date newsqlDueDate = new java.sql.Date(gc.getTime());
+		try {
+			conn = this.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		try {
+			PreparedStatement preparedStatement = conn
+					.prepareStatement("SELECT bookID FROM book WHERE title = ? and author = ?");
+			preparedStatement.setString(1, title);
+			preparedStatement.setString(2, author);
+			
+			
+			ResultSet rs = preparedStatement.executeQuery();
+			if (rs.next()) {
+				int bookt= rs.getInt("bookID");
+			
+				PreparedStatement preparedStatement2 = conn
+						.prepareStatement("Update loan set dueDate=?  WHERE bookID = ? and uID = ?");
+				
+				preparedStatement2.setDate(1, newsqlDueDate);
+				preparedStatement2.setInt(2, bookt);
+				preparedStatement2.setInt(3, user.getUid());
+				int rs2 = preparedStatement2.executeUpdate();
+				
+				
+				
+				
+			}
+			
+			
+			
+			
+			preparedStatement.close();
+			return true;
+		} catch (SQLException e) {
+			System.out.println("UNABLE TO SELECT Book");
+			e.printStackTrace();
+		}
+		
+		return false;
+		
+		
+		
+		
+		
+		
+		
+	}
+	
 
 	/**
 	 * Make a window. connect to the database. Connect to the DB and do some
