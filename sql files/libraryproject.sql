@@ -80,7 +80,6 @@ CREATE TABLE ARCHIVE
  birthday DATE DEFAULT '0000-00-00',
  fees DOUBLE DEFAULT 0.0,
  updatedOn timestamp not null on update current_timestamp,
- archivedOn timestamp not null,
  CHECK(isEmployee<2),
  PRIMARY KEY (uID)
 ) ;
@@ -129,7 +128,7 @@ delimiter ;
 --
 
 INSERT INTO USER (name, isEmployee, borrowed, birthday, fees, updatedOn)
-VALUES ("Alice",1,0,'2000-10-10',0.0,'2016-12-3 12:30:00');
+VALUES ("Alice",1,0,'2000-10-10',0.0,'2016-12-11 12:30:00');
 INSERT INTO USER (name, isEmployee, borrowed, birthday, fees, updatedOn)
 VALUES ("Bob",1,0,'2000-10-10',0.0,'2016-12-3 12:30:00');
 INSERT INTO USER (name, isEmployee, borrowed, birthday, fees, updatedOn)
@@ -141,13 +140,13 @@ VALUES ("Xavier",1,0,'2000-10-10',0.0,'2016-12-3 12:30:00');
 INSERT INTO USER (name, isEmployee, borrowed, birthday, fees, updatedOn)
 VALUES ("Kelly",0,0,'2010-10-10',0.0,'2016-12-3 12:30:00');
 INSERT INTO USER (name, isEmployee, borrowed, birthday, fees, updatedOn)
-VALUES ("Leon",0,0,'2000-10-10',0.0,'2016-12-3 12:30:00');
+VALUES ("Leon",0,0,'2000-10-10',0.0,'2016-12-7 12:30:00');
 INSERT INTO USER (name, isEmployee, borrowed, birthday, fees, updatedOn)
 VALUES ("Daniel",0,0,'2009-10-10',0.0,'2016-12-3 12:30:00');
 INSERT INTO USER (name, isEmployee, borrowed, birthday, fees, updatedOn)
 VALUES ("George",0,0,'2003-10-10',0.0,'2016-12-3 12:30:00');
 INSERT INTO USER (name, isEmployee, borrowed, birthday, fees, updatedOn)
-VALUES ("Eleanor",0,0,'2000-10-10',0.0,'2016-12-3 12:30:00');
+VALUES ("Eleanor",0,0,'2000-10-10',0.0,'2016-12-4 12:30:00');
 
 --
 -- Inserting dummy data into Location

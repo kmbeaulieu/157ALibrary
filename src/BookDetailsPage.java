@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import java.util.Date;
 
 import javax.swing.JButton;
@@ -47,7 +48,12 @@ public class BookDetailsPage extends JFrame {
 		//create frame
 		this.bookID = BookID;
 		 book = dbm.selectBook(bookID);
-		 location = dbm.selectLocation(book.getLocationId());
+		 try {
+			location = dbm.selectLocation(book.getLocationId());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//System.out.println(book.getAuthor());
 		//System.out.println(location.getShelfId());
 		
