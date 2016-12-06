@@ -305,7 +305,7 @@ public class DatabaseManager {
 		
 	}
 
-	// --- NEED TO CHANGE FROM VOID TO RETURN USER OBJECT!
+	// Select loan from loan table
 	public Loan selectLoan(int loanID) {
 		Connection conn = null;
 		Loan currentLoan = new Loan(0, 0, 0, null, null, 0);
@@ -413,7 +413,7 @@ public class DatabaseManager {
 		}
 	}
 
-	// ---------- NEED TO CHANGE FROM VOID TO RETURN BOOK OBJECT
+	// Select book from book table
 	public Book selectBook(int bookID) {
 		Book book = null;
 		Connection conn = null;
@@ -574,10 +574,10 @@ public class DatabaseManager {
 		}
 	}
 
-	// ---------- NEED TO CHANGE FROM VOID TO RETURN USER OBJECT!
 	// Gets all the attributes from the employee
-	public void selectEmployee(String name, String department) {
+	public Employee selectEmployee(String name, String department) {
 		Connection conn = null;
+		Employee employee = null;
 		try {
 			conn = this.getConnection();
 		} catch (SQLException e1) {
@@ -598,12 +598,15 @@ public class DatabaseManager {
 				String employeeName = rs.getString("name");
 				Date employeeJoinDate = rs.getDate("joinDate");
 				int employeePIN = rs.getInt("employeePIN");
+				employee = new Employee(employeeID, userID, employeeDepartment, employeeName, employeeJoinDate, employeePIN);
+				
 			}
 			preparedStatement.close();
 		} catch (SQLException e) {
 			System.out.println("UNABLE TO SELECT EMPLOYEE");
 			e.printStackTrace();
 		}
+		return employee;
 	}
 
 	// Update employee attributes in employee table
@@ -701,7 +704,6 @@ public class DatabaseManager {
 		}
 	}
 	
-	// ---------- NEED TO CHANGE FROM VOID TO RETURN LOCATION OBJECT!
 	// Get location info
 	public Location selectLocation(int locationID) {
 		Location location = null;
