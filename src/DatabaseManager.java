@@ -64,28 +64,6 @@ public class DatabaseManager {
 		return conn;
 	}
 
-	/**
-	 * Run a SQL command which does not return a recordset:
-	 * CREATE/INSERT/UPDATE/DELETE/DROP/etc.
-	 * 
-	 * @throws SQLException
-	 *             If something goes wrong
-	 */
-	public boolean executeUpdate(Connection conn, String command) throws SQLException {
-		Statement stmt = null;
-		try {
-			stmt = conn.createStatement();
-			stmt.executeUpdate(command); // This will throw a SQLException if it
-											// fails
-			return true;
-		} finally {
-			// This will run whether we throw an exception or not
-			if (stmt != null) {
-				stmt.close();
-			}
-		}
-	}
-
 	/* ------------- USER METHODS --------------- */
 
 	/**

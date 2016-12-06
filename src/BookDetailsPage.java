@@ -25,22 +25,7 @@ public class BookDetailsPage extends JFrame {
 	private Location location;
 	private JTextField userIdfield;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					//BookDetailsPage frame = new BookDetailsPage(0);
-					//frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	
 	/**
 	 * Create the frame.
 	 */

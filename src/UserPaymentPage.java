@@ -22,22 +22,6 @@ public class UserPaymentPage extends JFrame {
 	private JPanel contentPane;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					UserPaymentPage frame = new UserPaymentPage(new User(0,"TEST USER",0,0,new Date(System.currentTimeMillis()),0.0));
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 * 
 	 * @param user the user passed in

@@ -25,23 +25,7 @@ public class NewEmployeePage extends JFrame {
 	private JTextField departmentTextfield;
 	private DatabaseManager dbm;
 	private String username;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					NewEmployeePage frame = new NewEmployeePage();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	
 	/**
 	 * Create the frame.
 	 */

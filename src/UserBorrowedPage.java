@@ -25,22 +25,6 @@ public class UserBorrowedPage extends JFrame {
 	private JTable table ;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					UserBorrowedPage frame = new UserBorrowedPage(new User(0,"TEST USER",0,0,new Date(System.currentTimeMillis()),0.0));
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 * @param user passed in user value
 	 */
@@ -178,8 +162,8 @@ public class UserBorrowedPage extends JFrame {
 		btnBack.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				UserProfilePage frame = new UserProfilePage(user);
-				frame.setVisible(true);	
+				dispose();
+				new UserProfilePage(user);
 			}
 			});
 

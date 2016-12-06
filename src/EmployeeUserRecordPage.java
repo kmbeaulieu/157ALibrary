@@ -22,22 +22,6 @@ public class EmployeeUserRecordPage extends JFrame {
 	private JTable userRecordsTable;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					EmployeeUserRecordPage frame = new EmployeeUserRecordPage();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
 	public EmployeeUserRecordPage() {

@@ -33,24 +33,6 @@ public class SearchBooksPage extends JFrame {
 	private JTable table;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() 
-		{
-			public void run() 
-			{
-				try {
-					SearchBooksPage frame = new SearchBooksPage();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame. Adds all the things. Makes it visible.
 	 */
 	public SearchBooksPage() {
