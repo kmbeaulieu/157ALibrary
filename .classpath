@@ -2,12 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-<<<<<<< HEAD
-	<classpathentry kind="lib" path="/Users/Shakti1994/Documents/Eclipse/DBDemo/mysql-connector-java-5.1.40-bin.jar"/>
-||||||| merged common ancestors
 	<classpathentry kind="lib" path="C:/Users/Kori/Documents/GitHub/mysql-connector-java-5.1.40-bin.jar"/>
-=======
+
 	<classpathentry exported="true" kind="lib" path="mysql-connector-java-5.1.40-bin.jar"/>
->>>>>>> d7192b1f2ec54eb026113d3212bdea51e6643ace
 	<classpathentry kind="output" path="bin"/>
 </classpath>
